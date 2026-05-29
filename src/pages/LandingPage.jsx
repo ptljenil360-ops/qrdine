@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ContainerScroll } from "../components/ui/container-scroll-animation";
 import bgImage from "../../assets/remove_evrything_else_just_give_202605282246.jpeg";
+import heroImage from "../../assets/generate_image_having_Warm_and_202605282150.jpeg";
 
 export default function LandingPage() {
   return (
@@ -70,7 +71,7 @@ export default function LandingPage() {
           }
         >
           <img
-            src="assets\generate_image_having_Warm_and_202605282150.jpeg"
+            src={heroImage}
             alt="hero"
             className="w-full h-full object-cover object-center block"
             draggable={false}
