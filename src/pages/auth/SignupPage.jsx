@@ -70,7 +70,7 @@ function StepIndicator({ currentStep }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '28px', position: 'relative' }}>
       {/* Background track */}
-      <div style={{ position: 'absolute', top: '50%', left: '16px', right: '16px', height: '2px', backgroundColor: '#E2E8F0', transform: 'translateY(-50%)', zIndex: 0 }} />
+      <div style={{ position: 'absolute', top: '50%', left: '16px', right: '16px', height: '2px', backgroundColor: 'var(--color-border)', transform: 'translateY(-50%)', zIndex: 0 }} />
       {/* Progress track */}
       <div style={{
         position: 'absolute', top: '50%', left: '16px', height: '2px',
@@ -88,15 +88,15 @@ function StepIndicator({ currentStep }) {
             <div style={{
               width: '32px', height: '32px', borderRadius: '50%',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              border: `2px solid ${isActive ? '#F97316' : '#E2E8F0'}`,
-              backgroundColor: isActive ? '#F97316' : '#fff',
-              color: isActive ? '#fff' : '#94A3B8',
+              border: `2px solid ${isActive ? '#F97316' : 'var(--color-border)'}`,
+              backgroundColor: isActive ? '#F97316' : 'var(--color-base-card)',
+              color: isActive ? '#fff' : 'var(--color-text-muted)',
               transition: 'all 0.3s ease',
               fontSize: '14px', fontWeight: 600,
             }}>
               <Icon style={{ width: '16px', height: '16px' }} />
             </div>
-            <span className="step-label-text" style={{ fontSize: '11px', fontWeight: 600, color: '#94A3B8', marginTop: '6px' }}>
+            <span className="step-label-text" style={{ fontSize: '11px', fontWeight: 600, color: 'var(--color-text-muted)', marginTop: '6px' }}>
               {s.label}
             </span>
           </div>
@@ -477,7 +477,7 @@ export default function SignupPage() {
           width: '50vw',
           height: '100vh',
           overflowY: 'auto',
-          backgroundColor: '#fff',
+          backgroundColor: 'var(--color-base-bg)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -501,7 +501,7 @@ export default function SignupPage() {
             className="signup-form-card"
             style={{
               width: '420px',
-              backgroundColor: '#fff',
+              backgroundColor: 'var(--color-base-card)',
               borderRadius: '16px',
               boxShadow: '0 4px 24px rgba(0,0,0,0.10)',
               padding: '40px',
@@ -514,8 +514,8 @@ export default function SignupPage() {
             {step === 1 && (
               <div>
                 <div style={{ marginBottom: '24px' }}>
-                  <h2 style={{ fontSize: '24px', fontWeight: 700, color: '#1E293B', marginBottom: '4px' }}>Owner Registration</h2>
-                  <p style={{ fontSize: '14px', color: '#64748B' }}>
+                  <h2 style={{ fontSize: '24px', fontWeight: 700, color: 'var(--color-text-primary)', marginBottom: '4px' }}>Owner Registration</h2>
+                  <p style={{ fontSize: '14px', color: 'var(--color-text-secondary)' }}>
                     Add owner details, verify your phone, and set a password.
                   </p>
                 </div>
@@ -572,10 +572,10 @@ export default function SignupPage() {
                           height: '48px',
                           padding: '12px 16px',
                           lineHeight: '1.5',
-                          border: '1px solid #E2E8F0',
+                          border: '1px solid var(--color-border)',
                           borderRadius: '8px',
-                          backgroundColor: '#fff',
-                          color: '#1E293B',
+                          backgroundColor: 'var(--color-base-card)',
+                          color: 'var(--color-text-primary)',
                           fontSize: '14px',
                           fontWeight: 500,
                           cursor: 'pointer',
@@ -592,9 +592,9 @@ export default function SignupPage() {
 
                   {/* OTP Verification Block */}
                   {isOtpSent && !isPhoneVerified && (
-                    <div className="animate-slide-down" style={{ backgroundColor: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '8px', padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                    <div className="animate-slide-down" style={{ backgroundColor: 'var(--color-base-bg)', border: '1px solid var(--color-border)', borderRadius: '8px', padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <span style={{ fontSize: '12px', fontWeight: 600, color: '#1E293B' }}>Enter OTP Verification Code</span>
+                        <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--color-text-primary)' }}>Enter OTP Verification Code</span>
                         <span style={{ fontSize: '10px', fontWeight: 700, color: '#F97316', display: 'flex', alignItems: 'center', gap: '4px' }}>
                           <Phone style={{ width: '12px', height: '12px' }} /> SMS Delivered
                         </span>
@@ -608,10 +608,12 @@ export default function SignupPage() {
                           onChange={(e) => setUserOtp(e.target.value)}
                           style={{
                             flex: 1, padding: '12px 16px', lineHeight: '1.5', height: '48px',
-                            border: '1px solid #E2E8F0', borderRadius: '8px',
+                            border: '1px solid var(--color-border)', borderRadius: '8px',
                             textAlign: 'center', fontWeight: 700, fontSize: '16px',
                             letterSpacing: '0.1em', fontFamily: 'inherit',
                             outline: 'none',
+                            backgroundColor: 'var(--color-base-bg)',
+                            color: 'var(--color-text-primary)'
                           }}
                         />
                         <button
@@ -690,8 +692,8 @@ export default function SignupPage() {
             {step === 2 && (
               <form onSubmit={handleSignupSubmit}>
                 <div style={{ marginBottom: '24px' }}>
-                  <h2 style={{ fontSize: '24px', fontWeight: 700, color: '#1E293B', marginBottom: '4px' }}>Restaurant Profile</h2>
-                  <p style={{ fontSize: '14px', color: '#64748B' }}>
+                  <h2 style={{ fontSize: '24px', fontWeight: 700, color: 'var(--color-text-primary)', marginBottom: '4px' }}>Restaurant Profile</h2>
+                  <p style={{ fontSize: '14px', color: 'var(--color-text-secondary)' }}>
                     Tell us about your restaurant. A unique username will be generated for login.
                   </p>
                 </div>
@@ -711,14 +713,14 @@ export default function SignupPage() {
                   {restaurantName.trim().length >= 3 && (
                     <div className="animate-slide-down" style={{
                       padding: '14px 16px',
-                      backgroundColor: generatedUsername ? '#FFF7ED' : '#F8FAFC',
-                      border: `1px solid ${generatedUsername ? '#FDBA74' : '#E2E8F0'}`,
+                      backgroundColor: generatedUsername ? 'var(--color-accent-light)' : 'var(--color-base-bg)',
+                      border: `1px solid ${generatedUsername ? '#FDBA74' : 'var(--color-border)'}`,
                       borderRadius: '8px',
                       fontSize: '14px',
-                      color: '#1E293B',
+                      color: 'var(--color-text-primary)',
                     }}>
                       {isGeneratingUsername ? (
-                        <span style={{ color: '#64748B', fontStyle: 'italic' }}>Generating username…</span>
+                        <span style={{ color: 'var(--color-text-muted)', fontStyle: 'italic' }}>Generating username…</span>
                       ) : generatedUsername ? (
                         <span>
                           Your login username will be: <strong style={{ color: '#F97316', fontSize: '15px', letterSpacing: '0.01em' }}>{generatedUsername}</strong>
@@ -741,18 +743,18 @@ export default function SignupPage() {
 
                   {/* Logo upload */}
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                    <span style={{ fontSize: '14px', fontWeight: 600, color: '#1E293B' }}>Restaurant Logo</span>
+                    <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--color-text-primary)' }}>Restaurant Logo</span>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
                       <div style={{
                         width: '80px', height: '80px', borderRadius: '8px',
-                        backgroundColor: '#F8FAFC', border: '1px dashed #CBD5E1',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        backgroundColor: 'var(--color-base-bg)', border: '1px dashed var(--color-border)',
+                        display: 'flex', alignItems: 'center', justifycontent: 'center',
                         overflow: 'hidden', flexShrink: 0,
                       }}>
                         {logoPreview ? (
                           <img src={logoPreview} alt="Logo preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                         ) : (
-                          <Upload style={{ width: '24px', height: '24px', color: '#94A3B8' }} />
+                          <Upload style={{ width: '24px', height: '24px', color: 'var(--color-text-muted)' }} />
                         )}
                       </div>
                       <div style={{ flex: 1 }}>
@@ -760,9 +762,9 @@ export default function SignupPage() {
                           htmlFor="logo-upload"
                           style={{
                             display: 'inline-flex', alignItems: 'center',
-                            padding: '8px 16px', border: '1px solid #E2E8F0',
+                            padding: '8px 16px', border: '1px solid var(--color-border)',
                             borderRadius: '8px', fontSize: '14px', fontWeight: 500,
-                            color: '#1E293B', backgroundColor: '#fff',
+                            color: 'var(--color-text-primary)', backgroundColor: 'var(--color-base-card)',
                             cursor: 'pointer', transition: 'background 0.2s',
                           }}
                         >
@@ -775,7 +777,7 @@ export default function SignupPage() {
                           style={{ display: 'none' }}
                           onChange={handleLogoChange}
                         />
-                        <p style={{ fontSize: '12px', color: '#94A3B8', marginTop: '4px' }}>
+                        <p style={{ fontSize: '12px', color: 'var(--color-text-muted)', marginTop: '4px' }}>
                           PNG or JPG. Compressed automatically.
                         </p>
                       </div>
@@ -784,7 +786,7 @@ export default function SignupPage() {
 
                   {/* GST selection */}
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', paddingTop: '8px' }}>
-                    <span style={{ fontSize: '14px', fontWeight: 600, color: '#1E293B' }}>
+                    <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--color-text-primary)' }}>
                       Default GST Rate
                     </span>
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
@@ -799,9 +801,9 @@ export default function SignupPage() {
                           style={{
                             padding: '12px',
                             borderRadius: '8px',
-                            border: `1px solid ${gstRate === rate ? '#F97316' : '#E2E8F0'}`,
-                            backgroundColor: gstRate === rate ? '#FFF7ED' : '#fff',
-                            color: gstRate === rate ? '#F97316' : '#1E293B',
+                            border: `1px solid ${gstRate === rate ? '#F97316' : 'var(--color-border)'}`,
+                            backgroundColor: gstRate === rate ? 'var(--color-accent-light)' : 'var(--color-base-card)',
+                            color: gstRate === rate ? '#F97316' : 'var(--color-text-primary)',
                             fontWeight: 600,
                             fontSize: '14px',
                             cursor: 'pointer',
@@ -824,8 +826,8 @@ export default function SignupPage() {
                       disabled={loading}
                       style={{
                         flex: 1, minHeight: '48px',
-                        border: '1px solid #E2E8F0', borderRadius: '8px',
-                        backgroundColor: '#fff', color: '#1E293B',
+                        border: '1px solid var(--color-border)', borderRadius: '8px',
+                        backgroundColor: 'var(--color-base-card)', color: 'var(--color-text-primary)',
                         fontSize: '16px', fontWeight: 500,
                         cursor: 'pointer', fontFamily: 'inherit',
                         display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
@@ -861,14 +863,14 @@ export default function SignupPage() {
                   </svg>
                 </div>
 
-                <h2 style={{ fontSize: '24px', fontWeight: 700, color: '#1E293B', marginBottom: '8px' }}>Account Created!</h2>
+                <h2 style={{ fontSize: '24px', fontWeight: 700, color: 'var(--color-text-primary)', marginBottom: '8px' }}>Account Created!</h2>
 
                 {generatedUsername && (
                   <div style={{
                     padding: '16px', margin: '0 auto 24px',
-                    backgroundColor: '#FFF7ED', border: '1px solid #FDBA74',
+                    backgroundColor: 'var(--color-accent-light)', border: '1px solid var(--color-accent)',
                     borderRadius: '12px', maxWidth: '320px',
-                    fontSize: '14px', color: '#1E293B',
+                    fontSize: '14px', color: 'var(--color-text-primary)',
                   }}>
                     Your login username is: <br />
                     <strong style={{ fontSize: '18px', color: '#F97316', letterSpacing: '0.01em' }}>{generatedUsername}</strong>
@@ -877,22 +879,22 @@ export default function SignupPage() {
 
                 {email.trim() ? (
                   <div style={{
-                    backgroundColor: '#F8FAFC', border: '1px solid #E2E8F0',
+                    backgroundColor: 'var(--color-base-bg)', border: '1px solid var(--color-border)',
                     borderRadius: '12px', padding: '16px', textAlign: 'left',
                     maxWidth: '320px', margin: '0 auto 24px',
                   }}>
-                    <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', fontSize: '12px', color: '#1E293B' }}>
+                    <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', fontSize: '12px', color: 'var(--color-text-primary)' }}>
                       <div style={{ padding: '4px', background: 'rgba(249,115,22,0.15)', color: '#F97316', borderRadius: '50%', marginTop: '2px', flexShrink: 0 }}>
                         <Award style={{ width: '14px', height: '14px' }} />
                       </div>
                       <div>
-                        <span style={{ fontWeight: 700, color: '#1E293B' }}>Verify your email address</span>
-                        <p style={{ color: '#64748B', marginTop: '4px' }}>We sent a verification link to <span style={{ fontWeight: 600, color: '#1E293B' }}>{email}</span>.</p>
+                        <span style={{ fontWeight: 700, color: 'var(--color-text-primary)' }}>Verify your email address</span>
+                        <p style={{ color: 'var(--color-text-secondary)', marginTop: '4px' }}>We sent a verification link to <span style={{ fontWeight: 600, color: 'var(--color-text-primary)' }}>{email}</span>.</p>
                       </div>
                     </div>
                   </div>
                 ) : (
-                  <p style={{ color: '#64748B', maxWidth: '320px', margin: '0 auto 32px', fontSize: '14px' }}>
+                  <p style={{ color: 'var(--color-text-secondary)', maxWidth: '320px', margin: '0 auto 32px', fontSize: '14px' }}>
                     Your restaurant is registered. Let's build your menu and set up tables now.
                   </p>
                 )}
@@ -910,7 +912,7 @@ export default function SignupPage() {
 
           {/* Sign in link */}
           {step < 3 && (
-            <div style={{ textAlign: 'center', marginTop: '24px', fontSize: '14px', color: '#64748B' }}>
+            <div style={{ textAlign: 'center', marginTop: '24px', fontSize: '14px', color: 'var(--color-text-secondary)' }}>
               Already have an account?{' '}
               <Link to="/login" style={{ fontWeight: 600, color: '#F97316', textDecoration: 'none' }}>
                 Log In
