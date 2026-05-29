@@ -236,7 +236,7 @@ export default function LoginPage() {
           width: '50vw',
           height: '100vh',
           overflow: 'hidden',
-          backgroundColor: '#fff',
+          backgroundColor: 'var(--color-base-bg)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -259,32 +259,29 @@ export default function LoginPage() {
             className="login-form-card"
             style={{
               width: '420px',
-              backgroundColor: '#fff',
+              backgroundColor: 'var(--color-base-card)',
               borderRadius: '16px',
               boxShadow: '0 4px 24px rgba(0,0,0,0.10)',
               padding: '40px',
             }}
           >
             <div style={{ marginBottom: '24px' }}>
-              <h2 style={{ fontSize: '24px', fontWeight: 700, color: '#1E293B', marginBottom: '4px' }}>Owner Portal</h2>
-              <p style={{ fontSize: '14px', color: '#64748B' }}>
+              <h2 style={{ fontSize: '24px', fontWeight: 700, color: 'var(--color-text-primary)', marginBottom: '4px' }}>Owner Portal</h2>
+              <p style={{ fontSize: '14px', color: 'var(--color-text-secondary)' }}>
                 Use your restaurant username or verified phone number.
-              </p>
-            </div>
-
-            {/* Login Method Tabs */}
-            <div style={{ display: 'flex', gap: '8px', marginBottom: '24px', backgroundColor: '#F8FAFC', padding: '4px', borderRadius: '8px' }}>
+                     {/* Login Method Tabs */}
+            <div style={{ display: 'flex', gap: '8px', marginBottom: '24px', backgroundColor: 'var(--color-base-bg)', padding: '4px', borderRadius: '8px' }}>
               <button
                 type="button"
                 onClick={() => { setLoginMethod('username'); setErrors({}); }}
-                style={{ flex: 1, padding: '10px', borderRadius: '6px', fontSize: '14px', fontWeight: 600, border: 'none', cursor: 'pointer', transition: 'all 0.2s', backgroundColor: loginMethod === 'username' ? '#fff' : 'transparent', color: loginMethod === 'username' ? '#1E293B' : '#64748B', boxShadow: loginMethod === 'username' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
+                style={{ flex: 1, padding: '10px', borderRadius: '6px', fontSize: '14px', fontWeight: 600, border: 'none', cursor: 'pointer', transition: 'all 0.2s', backgroundColor: loginMethod === 'username' ? 'var(--color-base-card)' : 'transparent', color: loginMethod === 'username' ? 'var(--color-text-primary)' : 'var(--color-text-secondary)', boxShadow: loginMethod === 'username' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
               >
                 <User size={16} /> Username
               </button>
               <button
                 type="button"
                 onClick={() => { setLoginMethod('phone'); setIsOtpSent(false); setErrors({}); }}
-                style={{ flex: 1, padding: '10px', borderRadius: '6px', fontSize: '14px', fontWeight: 600, border: 'none', cursor: 'pointer', transition: 'all 0.2s', backgroundColor: loginMethod === 'phone' ? '#fff' : 'transparent', color: loginMethod === 'phone' ? '#1E293B' : '#64748B', boxShadow: loginMethod === 'phone' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
+                style={{ flex: 1, padding: '10px', borderRadius: '6px', fontSize: '14px', fontWeight: 600, border: 'none', cursor: 'pointer', transition: 'all 0.2s', backgroundColor: loginMethod === 'phone' ? 'var(--color-base-card)' : 'transparent', color: loginMethod === 'phone' ? 'var(--color-text-primary)' : 'var(--color-text-secondary)', boxShadow: loginMethod === 'phone' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
               >
                 <Phone size={16} /> Phone
               </button>
@@ -320,15 +317,15 @@ export default function LoginPage() {
                   required
                 />
 
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '14px' }}>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#64748B', cursor: 'pointer' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifycontent: 'space-between', fontSize: '14px' }}>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--color-text-secondary)', cursor: 'pointer' }}>
                     <input type="checkbox" style={{ width: '16px', height: '16px', accentColor: '#F97316', borderRadius: '4px' }} />
                     Remember me
                   </label>
                   <Link
                     to="#"
                     onClick={() => showToast('Password reset is not configured for trial accounts.', 'info')}
-                    style={{ fontWeight: 500, color: '#F97316', textDecoration: 'none' }}
+                    style={{ fontWeight: 500, color: '#F97316', textDecoration: 'none', marginLeft: 'auto' }}
                   >
                     Forgot Password?
                   </Link>
@@ -376,7 +373,7 @@ export default function LoginPage() {
 
                 {isOtpSent && (
                   <div className="animate-slide-down" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    <label style={{ fontSize: '14px', fontWeight: 600, color: '#1E293B' }}>Enter OTP</label>
+                    <label style={{ fontSize: '14px', fontWeight: 600, color: 'var(--color-text-primary)' }}>Enter OTP</label>
                     <input
                       type="text"
                       maxLength="6"
@@ -385,10 +382,12 @@ export default function LoginPage() {
                       onChange={(e) => setOtp(e.target.value)}
                       style={{
                         padding: '12px 16px', lineHeight: '1.5', height: '48px',
-                        border: `1px solid ${errors.otp ? '#EF4444' : '#E2E8F0'}`, borderRadius: '8px',
+                        border: `1px solid ${errors.otp ? '#EF4444' : 'var(--color-border)'}`, borderRadius: '8px',
                         textAlign: 'center', fontWeight: 700, fontSize: '16px',
                         letterSpacing: '0.1em', fontFamily: 'inherit',
                         outline: 'none',
+                        backgroundColor: 'var(--color-base-bg)',
+                        color: 'var(--color-text-primary)'
                       }}
                     />
                     {errors.otp && (
@@ -435,7 +434,7 @@ export default function LoginPage() {
               </form>
             )}
 
-            <div style={{ textAlign: 'center', marginTop: '24px', fontSize: '14px', color: '#64748B' }}>
+            <div style={{ textAlign: 'center', marginTop: '24px', fontSize: '14px', color: 'var(--color-text-secondary)' }}>
               Don't have an account?{' '}
               <Link to="/signup" style={{ fontWeight: 600, color: '#F97316', textDecoration: 'none' }}>
                 Sign Up
