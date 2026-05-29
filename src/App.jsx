@@ -4,6 +4,7 @@ import { ToastProvider } from './context/ToastContext'
 import { ThemeProvider } from './context/ThemeContext'
 import ProtectedRoute from './components/ui/ProtectedRoute'
 import DashboardLayout from './layouts/DashboardLayout'
+import PwaUpdater from './components/ui/PwaUpdater'
 
 /* ── Auth Pages ── */
 import LoginPage from './pages/auth/LoginPage'
@@ -37,6 +38,7 @@ export default function App() {
       <ThemeProvider>
         <AuthProvider>
           <ToastProvider>
+            <PwaUpdater />
             <Routes>
               {/* ── Public Auth Routes ── */}
               <Route path="/" element={<LandingPage />} />

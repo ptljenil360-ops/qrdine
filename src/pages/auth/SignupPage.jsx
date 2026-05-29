@@ -495,13 +495,7 @@ export default function SignupPage() {
           {/* Form Card */}
           <div id="signup-recaptcha"></div>
           <div
-            className="signup-form-card bg-[#FFFFFF] dark:bg-[#1E293B]"
-            style={{
-              width: '420px',
-              borderRadius: '16px',
-              boxShadow: '0 4px 24px rgba(0,0,0,0.08)',
-              padding: '40px',
-            }}
+            className="signup-form-card container"
           >
             {/* Step Indicator (inside card) */}
             {step < 3 && <StepIndicator currentStep={step} />}

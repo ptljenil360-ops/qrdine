@@ -255,13 +255,7 @@ export default function LoginPage() {
 
           {/* Form Card */}
           <div
-            className="login-form-card bg-[#FFFFFF] dark:bg-[#1E293B]"
-            style={{
-              width: '420px',
-              borderRadius: '16px',
-              boxShadow: '0 4px 24px rgba(0,0,0,0.08)',
-              padding: '40px',
-            }}
+            className="login-form-card container"
           >
             <div style={{ marginBottom: '24px' }}>
               <h2 className="text-[#1C1C1C] dark:text-[#F1F5F9]" style={{ fontSize: '24px', fontWeight: 700, marginBottom: '4px' }}>Owner Portal</h2>

@@ -6,7 +6,7 @@ import { useToast } from '../../context/ToastContext';
 import { sendVerification, deleteUserAccount } from '../../firebase/auth';
 import { updatePassword } from 'firebase/auth';
 import { auth } from '../../firebase/config';
-import { Building, Lock, CreditCard, Upload, CheckCircle, AlertTriangle } from 'lucide-react';
+import { Building, Lock, CreditCard, Upload, CheckCircle, AlertTriangle, RefreshCw } from 'lucide-react';
 import { GST_RATES } from '../../utils/constants';
 
 export default function SettingsPage() {
@@ -32,6 +32,17 @@ export default function SettingsPage() {
   const [securityLoading, setSecurityLoading] = useState(false);
   const [passwordErrors, setPasswordErrors] = useState({});
   const [deleteLoading, setDeleteLoading] = useState(false);
+
+  const [autoUpdatePwa, setAutoUpdatePwa] = useState(() => {
+    return localStorage.getItem('autoUpdatePwa') === 'true';
+  });
+
+  const handleToggleAutoUpdate = () => {
+    const newVal = !autoUpdatePwa;
+    setAutoUpdatePwa(newVal);
+    localStorage.setItem('autoUpdatePwa', String(newVal));
+    showToast(`Auto Update is now ${newVal ? 'ON' : 'OFF'}`, 'success');
+  };
 
   useEffect(() => {
     if (restaurant) {
@@ -423,6 +434,35 @@ export default function SettingsPage() {
                 <p className="text-[13px] text-[#F97316]">
                   Subscription billing integrations are currently in closed testing. Trial is free.
                 </p>
+              </div>
+            </div>
+
+            {/* App Preferences */}
+            <div className="mb-6 pb-6 border-b border-[#F0F0F0]">
+              <h3 className="text-[14px] font-[600] text-[#1C1C1C] mb-[12px] flex items-center gap-2">
+                <RefreshCw className="w-4 h-4 text-[#F97316]" /> App Preferences
+              </h3>
+              
+              <div className="flex items-center justify-between bg-gray-50 p-4 rounded-[8px] border border-[#E8E8E8]">
+                <div>
+                  <h4 className="text-[13px] font-[600] text-[#1C1C1C]">Auto Update App</h4>
+                  <p className="text-[12px] text-[#696969] mt-0.5 max-w-[200px]">
+                    Automatically install new versions of QRDine in the background.
+                  </p>
+                </div>
+                
+                <button
+                  onClick={handleToggleAutoUpdate}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                    autoUpdatePwa ? 'bg-[#F97316]' : 'bg-gray-300'
+                  }`}
+                >
+                  <span
+                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                      autoUpdatePwa ? 'translate-x-6' : 'translate-x-1'
+                    }`}
+                  />
+                </button>
               </div>
             </div>
 

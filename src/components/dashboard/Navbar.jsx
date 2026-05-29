@@ -1,6 +1,7 @@
 import { useAuth } from '../../context/AuthContext'
 import { useTheme } from '../../context/ThemeContext'
 import { Menu, Moon, Sun } from 'lucide-react'
+import InstallPwaButton from '../ui/InstallPwaButton'
 
 /**
  * Navbar — top navigation bar for the owner dashboard.
@@ -43,6 +44,9 @@ export default function Navbar() {
 
       {/* Right: Theme Toggle & Avatar */}
       <div className="flex items-center gap-4">
+        {/* Install PWA Button */}
+        <InstallPwaButton className="hidden sm:inline-flex" />
+
         {/* Dark Mode Toggle */}
         <button 
           onClick={toggleDarkMode} 
