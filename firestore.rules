@@ -1,0 +1,71 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper function to validate incoming order submissions.
+    function isValidNewOrder() {
+      return request.size < 102400
+             && request.resource.data.tableId is string
+             && request.resource.data.tableId.size() > 0
+             && request.resource.data.items is list
+             && request.resource.data.items.size() > 0
+             && request.resource.data.items.size() <= 50
+             && request.resource.data.status == 'pending'
+             && request.resource.data.grandTotal is number
+             && request.resource.data.grandTotal >= 0;
+    }
+
+    // Username registry for signup availability and username login lookup.
+    match /loginRegistry/{username} {
+      allow get: if true;
+      allow list: if false;
+      allow write: if request.auth != null;
+    }
+
+    // Legacy registry kept so older accounts can still log in.
+    match /licenseRegistry/{licenseNumber} {
+      allow get: if true;
+      allow list: if false;
+      allow write: if request.auth != null;
+    }
+
+    match /restaurants/{restaurantId} {
+
+      // Owner can read and write their own restaurant document.
+      allow read, write: if request.auth != null
+                         && request.auth.uid == restaurantId;
+
+      // Menu is public for QR ordering; owner manages it.
+      match /menu/{itemId} {
+        allow read: if true;
+        allow write: if request.auth != null
+                     && request.auth.uid == restaurantId;
+      }
+
+      // Tables are public for QR ordering; owner manages them.
+      match /tables/{tableId} {
+        allow read: if true;
+        allow write: if request.auth != null
+                     && request.auth.uid == restaurantId;
+      }
+
+      // Customers can create orders; owner can manage live order state.
+      match /orders/{orderId} {
+        allow create: if isValidNewOrder();
+        allow read, update: if request.auth != null
+                            && request.auth.uid == restaurantId;
+        allow delete: if false;
+      }
+
+      match /bills/{billId} {
+        allow read, write: if request.auth != null
+                           && request.auth.uid == restaurantId;
+      }
+
+      match /analytics/{dateId} {
+        allow read, write: if request.auth != null
+                           && request.auth.uid == restaurantId;
+      }
+    }
+  }
+}

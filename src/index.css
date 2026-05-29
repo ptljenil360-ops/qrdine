@@ -1,0 +1,298 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════════
+   QRDine — Design System Tokens & 60-30-10 Rule
+   ═══════════════════════════════════════════════════════ */
+
+@theme {
+  /* ── 10%: Brand Accent (Interactive) ── */
+  --color-accent: #F97316;
+  --color-accent-dark: #EA580C;
+  --color-accent-light: #FFF7ED;
+
+  /* ── Status Colors ── */
+  --color-success: #118A42;
+  --color-warning: #EAB308;
+  --color-error: #EF4444;
+  --color-pending: #F97316;
+
+  /* ── Owner Dashboard Colors (Light Mode Default) ── */
+  --color-base-bg: #F4F5F7;
+  --color-base-card: #FFFFFF;
+  --color-navbar-bg: #FFFFFF;
+  --color-sidebar-bg: #1E293B;
+  
+  --color-border: #E8E8E8;
+  --color-text-primary: #1C1C1C;
+  --color-text-secondary: #4A4A4A;
+  --color-text-body: #333333;
+  --color-text-muted: #696969;
+
+  --color-sidebar-text: #F8FAFC;
+  --color-sidebar-text-muted: #94A3B8;
+  --color-sidebar-hover-bg: rgba(255, 255, 255, 0.1);
+
+  --color-input-bg: #FFFFFF;
+  --color-input-border: #D1D5DB;
+
+  /* ── Customer Side Colors ── */
+  --color-customer-bg: #F4F5F7;
+  --color-customer-text: #1C1C1C;
+  --color-customer-muted: #696969;
+  --color-customer-border: #E8E8E8;
+
+  /* ── Typography ── */
+  --font-inter: 'Inter', sans-serif;
+  --font-syne: 'Syne', sans-serif;
+  --font-bricolage: 'Bricolage Grotesque', sans-serif;
+  --font-family-base: var(--font-inter);
+
+  /* ── Border Radius ── */
+  --radius-card: 16px; /* softer UI */
+  --radius-modal: 20px;
+  --radius-pill: 999px;
+
+  /* ── Shadows (Neumorphism / Glassmorphism support) ── */
+  --shadow-card: 0 1px 4px rgba(0, 0, 0, 0.08);
+  --shadow-card-hover: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --shadow-modal: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-neumorphic-light: 8px 8px 16px #e2e8f0, -8px -8px 16px #ffffff;
+  --shadow-neumorphic-dark: 5px 5px 10px #0b1121, -5px -5px 10px #131d33;
+
+  /* ── Transitions ── */
+  --transition-base: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ── Spacing (touch targets) ── */
+  --min-touch-target: 44px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   Global Base Styles & Dark Mode
+   ═══════════════════════════════════════════════════════ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font-family-base);
+  color: var(--color-text-body);
+  background-color: var(--color-base-bg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dark Mode Overrides */
+html.dark body {
+  background-color: var(--color-base-bg);
+  color: var(--color-text-body);
+}
+
+html.dark {
+  --color-base-bg: #0F172A;
+  --color-base-card: #1E293B;
+  --color-navbar-bg: #1E293B;
+  --color-sidebar-bg: #0B1120;
+  
+  --color-border: rgba(255,255,255,0.08);
+  --color-text-primary: #F1F5F9;
+  --color-text-secondary: #94A3B8;
+  --color-text-body: #CBD5E1;
+  --color-text-muted: #64748B;
+
+  --color-sidebar-text: #F1F5F9;
+  --color-sidebar-text-muted: rgba(255, 255, 255, 0.65);
+  --color-sidebar-hover-bg: rgba(0, 0, 0, 0.2);
+
+  --color-input-bg: #0F172A;
+  --color-input-border: rgba(255,255,255,0.12);
+
+  /* Customer Overrides */
+  --color-customer-bg: #0F172A;
+  --color-customer-text: #F8FAFC;
+  --color-customer-muted: #94A3B8;
+  --color-customer-border: rgba(255, 255, 255, 0.08);
+}
+
+/* ═══════════════════════════════════════════════════════
+   Scrollbar Styling (Owner Dashboard)
+   ═══════════════════════════════════════════════════════ */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-text-muted);
+  border-radius: var(--radius-pill);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-secondary);
+}
+
+/* ═══════════════════════════════════════════════════════
+   Utility Classes (Glassmorphism, Neumorphism, Gradients)
+   ═══════════════════════════════════════════════════════ */
+
+.gradient-accent {
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-dark));
+}
+
+.text-gradient {
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(135deg, var(--color-accent), #fca5a5);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+html.dark .glass-card {
+  background: rgba(30, 41, 59, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.neumorphic-card {
+  background: var(--color-base-bg);
+  box-shadow: var(--shadow-neumorphic-light);
+  border-radius: var(--radius-card);
+}
+
+html.dark .neumorphic-card {
+  background: #0F172A;
+  box-shadow: var(--shadow-neumorphic-dark);
+}
+
+/* ═══════════════════════════════════════════════════════
+   Animations
+   ═══════════════════════════════════════════════════════ */
+
+@keyframes pulse-border {
+  0%, 100% { border-color: var(--color-accent); opacity: 1; }
+  50% { border-color: var(--color-accent); opacity: 0.5; }
+}
+
+@keyframes slide-down {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slide-up {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes bounce-subtle {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes draw-check {
+  from { stroke-dashoffset: 100; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.3); opacity: 0.8; }
+}
+
+.animate-pulse-border { animation: pulse-border 2s ease-in-out infinite; }
+.animate-slide-down { animation: slide-down 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+.animate-slide-up { animation: slide-up 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+.animate-fade-in { animation: fade-in 0.4s ease-out; }
+.animate-bounce-subtle { animation: bounce-subtle 0.3s ease-out; }
+.animate-skeleton { animation: skeleton-pulse 1.5s ease-in-out infinite; }
+.animate-spin { animation: spin 0.8s linear infinite; }
+.animate-pulse-dot { animation: pulse-dot 1.5s ease-in-out infinite; }
+.animate-draw-check {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: draw-check 0.6s ease-out forwards;
+}
+
+/* ═══════════════════════════════════════════════════════
+   Print Styles — Bill Only
+   ═══════════════════════════════════════════════════════ */
+
+@media print {
+  body > *:not(.bill-print-area) { display: none !important; }
+  .bill-print-area {
+    display: block !important;
+    width: 80mm;
+    font-size: 12px;
+    font-family: monospace;
+    margin: 0;
+    padding: 0;
+  }
+  .no-print { display: none !important; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   Focus Styles (Accessibility)
+   ═══════════════════════════════════════════════════════ */
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   Customer Side Overrides
+   ═══════════════════════════════════════════════════════ */
+
+.customer-theme {
+  background-color: var(--color-customer-bg);
+  color: var(--color-customer-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+html.dark .customer-theme {
+  background-color: #0F172A;
+  color: #F8FAFC;
+}
+
+.customer-theme .text-muted {
+  color: var(--color-customer-muted);
+}
+
+html.dark .customer-theme .text-muted {
+  color: #94A3B8;
+}
