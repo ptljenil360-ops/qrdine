@@ -231,12 +231,11 @@ export default function LoginPage() {
 
       {/* ═══ Right Panel — Form (Always visible) ═══ */}
       <div
-        className="login-right-panel"
+        className="login-right-panel bg-[#FFFFFF] dark:bg-[#1E293B]"
         style={{
           width: '50vw',
           height: '100vh',
           overflow: 'hidden',
-          backgroundColor: 'var(--color-base-bg)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -256,32 +255,36 @@ export default function LoginPage() {
 
           {/* Form Card */}
           <div
-            className="login-form-card"
+            className="login-form-card bg-[#FFFFFF] dark:bg-[#1E293B]"
             style={{
               width: '420px',
-              backgroundColor: 'var(--color-base-card)',
               borderRadius: '16px',
-              boxShadow: '0 4px 24px rgba(0,0,0,0.10)',
+              boxShadow: '0 4px 24px rgba(0,0,0,0.08)',
               padding: '40px',
             }}
           >
             <div style={{ marginBottom: '24px' }}>
-              <h2 style={{ fontSize: '24px', fontWeight: 700, color: 'var(--color-text-primary)', marginBottom: '4px' }}>Owner Portal</h2>
-              <p style={{ fontSize: '14px', color: 'var(--color-text-secondary)' }}>
+              <h2 className="text-[#1C1C1C] dark:text-[#F1F5F9]" style={{ fontSize: '24px', fontWeight: 700, marginBottom: '4px' }}>Owner Portal</h2>
+              <p className="text-[#696969] dark:text-[#94A3B8]" style={{ fontSize: '14px' }}>
                 Use your restaurant username or verified phone number.
-                     {/* Login Method Tabs */}
-            <div style={{ display: 'flex', gap: '8px', marginBottom: '24px', backgroundColor: 'var(--color-base-bg)', padding: '4px', borderRadius: '8px' }}>
+              </p>
+            </div>
+            
+            {/* Login Method Tabs */}
+            <div className="bg-[#F4F5F7] dark:bg-[#0F172A]" style={{ display: 'flex', gap: '8px', marginBottom: '24px', padding: '4px', borderRadius: '8px' }}>
               <button
                 type="button"
                 onClick={() => { setLoginMethod('username'); setErrors({}); }}
-                style={{ flex: 1, padding: '10px', borderRadius: '6px', fontSize: '14px', fontWeight: 600, border: 'none', cursor: 'pointer', transition: 'all 0.2s', backgroundColor: loginMethod === 'username' ? 'var(--color-base-card)' : 'transparent', color: loginMethod === 'username' ? 'var(--color-text-primary)' : 'var(--color-text-secondary)', boxShadow: loginMethod === 'username' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
+                className={loginMethod === 'username' ? 'bg-[#FFFFFF] dark:bg-[#1E293B] text-[#1C1C1C] dark:text-[#F1F5F9]' : 'bg-transparent text-[#696969] dark:text-[#94A3B8]'}
+                style={{ flex: 1, padding: '10px', borderRadius: '6px', fontSize: '14px', fontWeight: 600, border: 'none', cursor: 'pointer', transition: 'all 0.2s', boxShadow: loginMethod === 'username' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
               >
                 <User size={16} /> Username
               </button>
               <button
                 type="button"
                 onClick={() => { setLoginMethod('phone'); setIsOtpSent(false); setErrors({}); }}
-                style={{ flex: 1, padding: '10px', borderRadius: '6px', fontSize: '14px', fontWeight: 600, border: 'none', cursor: 'pointer', transition: 'all 0.2s', backgroundColor: loginMethod === 'phone' ? 'var(--color-base-card)' : 'transparent', color: loginMethod === 'phone' ? 'var(--color-text-primary)' : 'var(--color-text-secondary)', boxShadow: loginMethod === 'phone' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
+                className={loginMethod === 'phone' ? 'bg-[#FFFFFF] dark:bg-[#1E293B] text-[#1C1C1C] dark:text-[#F1F5F9]' : 'bg-transparent text-[#696969] dark:text-[#94A3B8]'}
+                style={{ flex: 1, padding: '10px', borderRadius: '6px', fontSize: '14px', fontWeight: 600, border: 'none', cursor: 'pointer', transition: 'all 0.2s', boxShadow: loginMethod === 'phone' ? '0 1px 3px rgba(0,0,0,0.1)' : 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}
               >
                 <Phone size={16} /> Phone
               </button>
@@ -318,7 +321,7 @@ export default function LoginPage() {
                 />
 
                 <div style={{ display: 'flex', alignItems: 'center', justifycontent: 'space-between', fontSize: '14px' }}>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--color-text-secondary)', cursor: 'pointer' }}>
+                  <label className="text-[#696969] dark:text-[#94A3B8]" style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
                     <input type="checkbox" style={{ width: '16px', height: '16px', accentColor: '#F97316', borderRadius: '4px' }} />
                     Remember me
                   </label>
@@ -337,13 +340,12 @@ export default function LoginPage() {
                   className="login-submit-btn"
                   style={{
                     width: '100%',
-                    minHeight: '48px',
-                    padding: '12px 16px',
-                    lineHeight: '1.5',
+                    height: '48px',
+                    padding: '0 16px',
                     backgroundColor: '#F97316',
                     color: '#fff',
                     border: 'none',
-                    borderRadius: '8px',
+                    borderRadius: '999px',
                     fontSize: '16px',
                     fontWeight: 600,
                     cursor: loading ? 'not-allowed' : 'pointer',
@@ -373,21 +375,21 @@ export default function LoginPage() {
 
                 {isOtpSent && (
                   <div className="animate-slide-down" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    <label style={{ fontSize: '14px', fontWeight: 600, color: 'var(--color-text-primary)' }}>Enter OTP</label>
+                    <label className="text-[#1C1C1C] dark:text-[#F1F5F9]" style={{ fontSize: '14px', fontWeight: 600 }}>Enter OTP</label>
                     <input
                       type="text"
                       maxLength="6"
                       placeholder="e.g. 123456"
                       value={otp}
                       onChange={(e) => setOtp(e.target.value)}
+                      className="bg-[#FFFFFF] dark:bg-[#0F172A] text-[#1C1C1C] dark:text-[#F1F5F9] border-[#E8E8E8] dark:border-[rgba(255,255,255,0.12)] focus:border-[#F97316]"
                       style={{
-                        padding: '12px 16px', lineHeight: '1.5', height: '48px',
-                        border: `1px solid ${errors.otp ? '#EF4444' : 'var(--color-border)'}`, borderRadius: '8px',
+                        padding: '0 16px', height: '48px',
+                        borderWidth: '1px', borderStyle: 'solid', borderRadius: '8px',
+                        borderColor: errors.otp ? '#EF4444' : undefined,
                         textAlign: 'center', fontWeight: 700, fontSize: '16px',
                         letterSpacing: '0.1em', fontFamily: 'inherit',
                         outline: 'none',
-                        backgroundColor: 'var(--color-base-bg)',
-                        color: 'var(--color-text-primary)'
                       }}
                     />
                     {errors.otp && (
@@ -402,13 +404,12 @@ export default function LoginPage() {
                   className="login-submit-btn"
                   style={{
                     width: '100%',
-                    minHeight: '48px',
-                    padding: '12px 16px',
-                    lineHeight: '1.5',
+                    height: '48px',
+                    padding: '0 16px',
                     backgroundColor: '#F97316',
                     color: '#fff',
                     border: 'none',
-                    borderRadius: '8px',
+                    borderRadius: '999px',
                     fontSize: '16px',
                     fontWeight: 600,
                     cursor: loading ? 'not-allowed' : 'pointer',
@@ -434,7 +435,7 @@ export default function LoginPage() {
               </form>
             )}
 
-            <div style={{ textAlign: 'center', marginTop: '24px', fontSize: '14px', color: 'var(--color-text-secondary)' }}>
+            <div className="text-[#696969] dark:text-[#94A3B8]" style={{ textAlign: 'center', marginTop: '24px', fontSize: '14px' }}>
               Don't have an account?{' '}
               <Link to="/signup" style={{ fontWeight: 600, color: '#F97316', textDecoration: 'none' }}>
                 Sign Up

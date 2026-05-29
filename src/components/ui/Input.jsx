@@ -22,19 +22,19 @@ const Input = React.forwardRef(({
   const inputType = isPassword ? (showPassword ? 'text' : 'password') : type;
 
   return (
-    <div className={`flex flex-col gap-1.5 w-full relative ${className}`}>
+    <div className={`flex flex-col w-full relative ${className}`}>
       {label && (
-        <div className="flex items-center gap-1.5">
-          <label htmlFor={id} className="text-sm font-semibold text-text-primary">
+        <div className="flex items-center gap-1.5 mb-[6px]">
+          <label htmlFor={id} className="text-[13px] font-medium text-[#696969] dark:text-[#94A3B8]">
             {label}
-            {required && <span className="text-error ml-1">*</span>}
+            {required && <span className="text-[#EF4444] ml-1">*</span>}
           </label>
           
           {tooltip && (
             <div className="relative inline-flex items-center">
               <button
                 type="button"
-                className="text-text-muted hover:text-text-secondary transition-colors"
+                className="text-[#696969] dark:text-[#94A3B8] hover:text-[#1C1C1C] dark:hover:text-[#F1F5F9] transition-colors"
                 onMouseEnter={() => setShowTooltip(true)}
                 onMouseLeave={() => setShowTooltip(false)}
                 onClick={() => setShowTooltip(!showTooltip)}
@@ -62,21 +62,17 @@ const Input = React.forwardRef(({
             w-full
             h-[48px]
             px-[16px]
-            py-[12px]
-            leading-normal
-            text-base
-            text-[var(--color-text-primary)]
-            placeholder-[var(--color-text-muted)]
-            bg-[var(--color-base-card)]
+            text-[14px]
+            text-[#1C1C1C] dark:text-[#F1F5F9]
+            placeholder-[#AAAAAA] dark:placeholder-[#64748B]
+            bg-[#FFFFFF] dark:bg-[#0F172A]
             border
-            border-slate-300 dark:border-slate-700
+            border-[#E8E8E8] dark:border-[rgba(255,255,255,0.12)]
             rounded-[8px]
             transition-all duration-200
             focus:outline-none
             focus:border-[#F97316]
-            focus:ring-1
-            focus:ring-[#F97316]/25
-            ${error ? 'border-[#EF4444] focus:border-[#EF4444] focus:ring-[#EF4444]/25' : ''}
+            ${error ? 'border-[#EF4444] focus:border-[#EF4444]' : ''}
             ${isPassword ? 'pr-[44px]' : ''}
           `}
           {...props}
@@ -85,7 +81,7 @@ const Input = React.forwardRef(({
         {isPassword && (
           <button
             type="button"
-            className="absolute inset-y-0 right-0 w-[44px] flex items-center justify-center text-text-secondary hover:text-text-primary transition-colors cursor-pointer"
+            className="absolute inset-y-0 right-0 w-[44px] flex items-center justify-center text-[#696969] dark:text-[#94A3B8] hover:text-[#1C1C1C] dark:hover:text-[#F1F5F9] transition-colors cursor-pointer"
             onClick={() => setShowPassword(!showPassword)}
             aria-label={showPassword ? 'Hide password' : 'Show password'}
           >

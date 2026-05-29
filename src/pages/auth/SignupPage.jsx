@@ -70,7 +70,7 @@ function StepIndicator({ currentStep }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '28px', position: 'relative' }}>
       {/* Background track */}
-      <div style={{ position: 'absolute', top: '50%', left: '16px', right: '16px', height: '2px', backgroundColor: 'var(--color-border)', transform: 'translateY(-50%)', zIndex: 0 }} />
+      <div className="bg-[#E8E8E8] dark:bg-[rgba(255,255,255,0.08)]" style={{ position: 'absolute', top: '50%', left: '16px', right: '16px', height: '2px', transform: 'translateY(-50%)', zIndex: 0 }} />
       {/* Progress track */}
       <div style={{
         position: 'absolute', top: '50%', left: '16px', height: '2px',
@@ -82,21 +82,19 @@ function StepIndicator({ currentStep }) {
       {steps.map((s, i) => {
         const stepNum = i + 1;
         const isActive = currentStep >= stepNum;
-        const Icon = s.icon;
+        const isCompleted = currentStep > stepNum;
+        const Icon = isCompleted ? Check : s.icon;
+        
         return (
           <div key={s.label} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative', zIndex: 10 }}>
-            <div style={{
+            <div className={isActive ? 'bg-[#F97316] text-[#FFFFFF]' : 'bg-[#F0F0F0] dark:bg-[#1E293B] text-[#AAAAAA] dark:text-[#64748B]'} style={{
               width: '32px', height: '32px', borderRadius: '50%',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              border: `2px solid ${isActive ? '#F97316' : 'var(--color-border)'}`,
-              backgroundColor: isActive ? '#F97316' : 'var(--color-base-card)',
-              color: isActive ? '#fff' : 'var(--color-text-muted)',
               transition: 'all 0.3s ease',
-              fontSize: '14px', fontWeight: 600,
             }}>
               <Icon style={{ width: '16px', height: '16px' }} />
             </div>
-            <span className="step-label-text" style={{ fontSize: '11px', fontWeight: 600, color: 'var(--color-text-muted)', marginTop: '6px' }}>
+            <span className={`step-label-text ${isActive ? 'text-[#F97316]' : 'text-[#AAAAAA] dark:text-[#64748B]'}`} style={{ fontSize: '11px', fontWeight: isActive ? 600 : 400, marginTop: '6px' }}>
               {s.label}
             </span>
           </div>
@@ -407,11 +405,11 @@ export default function SignupPage() {
   /* ═══ Primary button style (always solid orange, opacity only while loading) ═══ */
   const primaryBtnStyle = (isLoading = false) => ({
     width: '100%',
-    minHeight: '48px',
+    height: '48px',
     backgroundColor: '#F97316',
     color: '#fff',
     border: 'none',
-    borderRadius: '8px',
+    borderRadius: '999px',
     fontSize: '16px',
     fontWeight: 600,
     cursor: isLoading ? 'not-allowed' : 'pointer',
@@ -472,12 +470,11 @@ export default function SignupPage() {
 
       {/* ═══ Right Panel — Form ═══ */}
       <div
-        className="signup-right-panel"
+        className="signup-right-panel bg-[#FFFFFF] dark:bg-[#1E293B]"
         style={{
           width: '50vw',
           height: '100vh',
           overflowY: 'auto',
-          backgroundColor: 'var(--color-base-bg)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -498,12 +495,11 @@ export default function SignupPage() {
           {/* Form Card */}
           <div id="signup-recaptcha"></div>
           <div
-            className="signup-form-card"
+            className="signup-form-card bg-[#FFFFFF] dark:bg-[#1E293B]"
             style={{
               width: '420px',
-              backgroundColor: 'var(--color-base-card)',
               borderRadius: '16px',
-              boxShadow: '0 4px 24px rgba(0,0,0,0.10)',
+              boxShadow: '0 4px 24px rgba(0,0,0,0.08)',
               padding: '40px',
             }}
           >
@@ -514,8 +510,8 @@ export default function SignupPage() {
             {step === 1 && (
               <div>
                 <div style={{ marginBottom: '24px' }}>
-                  <h2 style={{ fontSize: '24px', fontWeight: 700, color: 'var(--color-text-primary)', marginBottom: '4px' }}>Owner Registration</h2>
-                  <p style={{ fontSize: '14px', color: 'var(--color-text-secondary)' }}>
+                  <h2 className="text-[#1C1C1C] dark:text-[#F1F5F9]" style={{ fontSize: '24px', fontWeight: 700, marginBottom: '4px' }}>Owner Registration</h2>
+                  <p className="text-[#696969] dark:text-[#94A3B8]" style={{ fontSize: '14px' }}>
                     Add owner details, verify your phone, and set a password.
                   </p>
                 </div>
@@ -570,45 +566,48 @@ export default function SignupPage() {
                         disabled={loading}
                         style={{
                           height: '48px',
-                          padding: '12px 16px',
-                          lineHeight: '1.5',
-                          border: '1px solid var(--color-border)',
+                          padding: '0 16px',
+                          border: 'none',
                           borderRadius: '8px',
-                          backgroundColor: 'var(--color-base-card)',
-                          color: 'var(--color-text-primary)',
+                          backgroundColor: '#F97316',
+                          color: '#fff',
                           fontSize: '14px',
-                          fontWeight: 500,
+                          fontWeight: 600,
                           cursor: 'pointer',
                           whiteSpace: 'nowrap',
                           fontFamily: 'inherit',
                           flexShrink: 0,
                           marginTop: '26px',
+                          outline: 'none',
                         }}
                       >
-                        {isOtpSent ? 'Resend' : 'Send OTP'}
+                        {isOtpSent ? (loading ? 'Sending…' : 'Resend OTP') : (loading ? 'Sending…' : 'Send OTP')}
                       </button>
                     )}
                   </div>
 
                   {/* OTP Verification Block */}
                   {isOtpSent && !isPhoneVerified && (
-                    <div className="animate-slide-down" style={{ backgroundColor: 'var(--color-base-bg)', border: '1px solid var(--color-border)', borderRadius: '8px', padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                    <div className="animate-slide-down bg-[#F4F5F7] dark:bg-[#0F172A] border-[#E8E8E8] dark:border-[rgba(255,255,255,0.12)]" style={{ borderWidth: '1px', borderStyle: 'solid', borderRadius: '8px', padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <span style={{ fontSize: '12px', fontWeight: 600, color: 'var(--color-text-primary)' }}>Enter OTP Verification Code</span>
-                        <span style={{ fontSize: '10px', fontWeight: 700, color: '#F97316', display: 'flex', alignItems: 'center', gap: '4px' }}>
-                          <Phone style={{ width: '12px', height: '12px' }} /> SMS Delivered
-                        </span>
+                        <span className="text-[#1C1C1C] dark:text-[#F1F5F9]" style={{ fontSize: '12px', fontWeight: 600 }}>Enter OTP Verification Code</span>
+                        {confirmationResult && (
+                          <span style={{ fontSize: '12px', color: '#16A34A', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                            <CheckCircle2 size={12} /> SMS Sent
+                          </span>
+                        )}
                       </div>
-                      <div style={{ display: 'flex', gap: '12px' }}>
+                      <div style={{ display: 'flex', gap: '8px' }}>
                         <input
                           type="text"
                           maxLength="6"
-                          placeholder="e.g. 123456"
+                          placeholder="000000"
                           value={userOtp}
                           onChange={(e) => setUserOtp(e.target.value)}
+                          className="bg-[#FFFFFF] dark:bg-[#0F172A] text-[#1C1C1C] dark:text-[#F1F5F9] border-[#E8E8E8] dark:border-[rgba(255,255,255,0.12)] focus:border-[#F97316]"
                           style={{
-                            flex: 1, padding: '12px 16px', lineHeight: '1.5', height: '48px',
-                            border: '1px solid var(--color-border)', borderRadius: '8px',
+                            flex: 1, padding: '0 16px', height: '48px',
+                            borderWidth: '1px', borderStyle: 'solid', borderRadius: '8px',
                             textAlign: 'center', fontWeight: 700, fontSize: '16px',
                             letterSpacing: '0.1em', fontFamily: 'inherit',
                             outline: 'none',
@@ -692,8 +691,8 @@ export default function SignupPage() {
             {step === 2 && (
               <form onSubmit={handleSignupSubmit}>
                 <div style={{ marginBottom: '24px' }}>
-                  <h2 style={{ fontSize: '24px', fontWeight: 700, color: 'var(--color-text-primary)', marginBottom: '4px' }}>Restaurant Profile</h2>
-                  <p style={{ fontSize: '14px', color: 'var(--color-text-secondary)' }}>
+                  <h2 className="text-[#1C1C1C] dark:text-[#F1F5F9]" style={{ fontSize: '24px', fontWeight: 700, marginBottom: '4px' }}>Restaurant Profile</h2>
+                  <p className="text-[#696969] dark:text-[#94A3B8]" style={{ fontSize: '14px' }}>
                     Tell us about your restaurant. A unique username will be generated for login.
                   </p>
                 </div>
@@ -760,12 +759,12 @@ export default function SignupPage() {
                       <div style={{ flex: 1 }}>
                         <label
                           htmlFor="logo-upload"
+                          className="bg-[#FFFFFF] dark:bg-[#1E293B] text-[#1C1C1C] dark:text-[#F1F5F9] border-[#E8E8E8] dark:border-[rgba(255,255,255,0.12)] hover:border-[#F97316]"
                           style={{
                             display: 'inline-flex', alignItems: 'center',
-                            padding: '8px 16px', border: '1px solid var(--color-border)',
+                            padding: '0 16px', height: '36px', borderWidth: '1px', borderStyle: 'solid',
                             borderRadius: '8px', fontSize: '14px', fontWeight: 500,
-                            color: 'var(--color-text-primary)', backgroundColor: 'var(--color-base-card)',
-                            cursor: 'pointer', transition: 'background 0.2s',
+                            cursor: 'pointer', transition: 'all 0.2s',
                           }}
                         >
                           Select Logo
@@ -824,12 +823,12 @@ export default function SignupPage() {
                       type="button"
                       onClick={handleBack}
                       disabled={loading}
+                      className="bg-[#FFFFFF] dark:bg-[#1E293B] text-[#1C1C1C] dark:text-[#F1F5F9] border-[#E8E8E8] dark:border-[rgba(255,255,255,0.12)] hover:border-[#F97316]"
                       style={{
-                        flex: 1, minHeight: '48px',
-                        border: '1px solid var(--color-border)', borderRadius: '8px',
-                        backgroundColor: 'var(--color-base-card)', color: 'var(--color-text-primary)',
+                        flex: 1, height: '48px',
+                        borderWidth: '1px', borderStyle: 'solid', borderRadius: '999px',
                         fontSize: '16px', fontWeight: 500,
-                        cursor: 'pointer', fontFamily: 'inherit',
+                        cursor: 'pointer', fontFamily: 'inherit', transition: 'all 0.2s ease',
                         display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
                       }}
                     >
@@ -912,7 +911,7 @@ export default function SignupPage() {
 
           {/* Sign in link */}
           {step < 3 && (
-            <div style={{ textAlign: 'center', marginTop: '24px', fontSize: '14px', color: 'var(--color-text-secondary)' }}>
+            <div className="text-[#696969] dark:text-[#94A3B8]" style={{ textAlign: 'center', marginTop: '24px', fontSize: '14px' }}>
               Already have an account?{' '}
               <Link to="/login" style={{ fontWeight: 600, color: '#F97316', textDecoration: 'none' }}>
                 Log In
