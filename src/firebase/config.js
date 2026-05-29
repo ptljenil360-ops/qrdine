@@ -9,12 +9,12 @@ import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check'
  * See .env.example for required keys.
  */
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "mock-api-key-placeholder",
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "mock-auth-domain-placeholder",
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "qrdine-mock",
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "qrdine-mock.appspot.com",
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "1234567890",
+  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:1234567890:web:1234567890",
 }
 
 const app = initializeApp(firebaseConfig)
