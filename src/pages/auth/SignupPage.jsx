@@ -901,10 +901,7 @@ export default function SignupPage() {
                 </button>
               </div>
             )}
-          </div>
-
-          {/* Sign in link */}
-          {step < 3 && (
+            {step < 3 && (
             <div className="text-[#696969] dark:text-[#94A3B8]" style={{ textAlign: 'center', marginTop: '24px', fontSize: '14px' }}>
               Already have an account?{' '}
               <Link to="/login" style={{ fontWeight: 600, color: '#F97316', textDecoration: 'none' }}>
@@ -912,6 +909,7 @@ export default function SignupPage() {
               </Link>
             </div>
           )}
+          </div>
         </div>
       </div>
 
