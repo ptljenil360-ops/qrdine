@@ -3,7 +3,7 @@ import path from 'path';
 
 const PUBLIC_DIR = path.join(process.cwd(), 'public');
 const ICONS_DIR = path.join(PUBLIC_DIR, 'icons');
-const SOURCE_IMAGE = 'C:\\Users\\jenco\\.gemini\\antigravity-ide\\brain\\13c07ca4-4f25-4d7e-a7f1-27bdf5efc753\\qrdine_logo_1780073229968.png';
+const SOURCE_IMAGE = path.join(PUBLIC_DIR, 'RaShoyi_logo_circle.png');
 
 // Delete manual PWA files
 try {

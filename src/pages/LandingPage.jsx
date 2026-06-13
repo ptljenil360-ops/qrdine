@@ -44,18 +44,18 @@ export default function LandingPage() {
                   hidden: { y: 50, opacity: 0 },
                   visible: { y: 0, opacity: 1, transition: { duration: 0.8, ease: "easeOut" } }
                 }}
-                className="font-heading font-[400] text-[clamp(48px,7vw,88px)] leading-[1.05] tracking-normal text-[#FDFCFB] text-center"
-                style={{ textShadow: '0 4px 32px rgba(0,0,0,0.8), 0 2px 10px rgba(0,0,0,0.5)' }}
+                className="font-heading font-[400] text-[clamp(48px,7vw,88px)] leading-[1.05] tracking-normal text-white text-center"
+                style={{ textShadow: '0px 2px 4px rgba(0,0,0,0.9), 0px 8px 24px rgba(0,0,0,0.7), 0px 16px 40px rgba(0,0,0,0.5)' }}
               >
-                Modern Restaurant Ordering <span className="italic text-[#e8c48a]">Made Simple</span>
+                Modern Restaurant Ordering <span className="italic text-[#FDBA74]" style={{ textShadow: '0px 2px 4px rgba(0,0,0,0.9), 0px 0px 20px rgba(253,186,116,0.5)' }}>Made Simple</span>
               </motion.h1>
               <motion.p 
                 variants={{
                   hidden: { y: 50, opacity: 0 },
                   visible: { y: 0, opacity: 1, transition: { duration: 0.8, ease: "easeOut" } }
                 }}
-                className="font-body font-[400] text-[clamp(16px,2vw,20px)] leading-[1.7] tracking-[0.01em] text-[#F8F5F0] text-center max-w-3xl mt-6"
-                style={{ textShadow: '0 2px 16px rgba(0,0,0,0.9)' }}
+                className="font-body font-[500] text-[clamp(16px,2vw,20px)] leading-[1.7] tracking-[0.01em] text-white text-center max-w-3xl mt-6"
+                style={{ textShadow: '0px 2px 4px rgba(0,0,0,0.9), 0px 4px 12px rgba(0,0,0,0.8)' }}
               >
                 Empower customers to scan, browse menus, and place orders instantly <br className="hidden md:block" />
                 with RaShoyi's powerful web app.
