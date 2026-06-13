@@ -18,7 +18,7 @@ export default function LandingPage() {
         className="w-full p-6 flex justify-between items-center max-w-7xl mx-auto z-10"
       >
         <div className="flex items-center">
-          <img src="/assets/RaShoyi_logo_circle.png" alt="RaShoyi Logo" className="h-8 w-auto object-contain" />
+          <img src={`${import.meta.env.BASE_URL}assets/RaShoyi_logo_circle.png`} alt="RaShoyi Logo" className="h-8 w-auto object-contain" />
         </div>
         <div className="flex gap-4">
         </div>

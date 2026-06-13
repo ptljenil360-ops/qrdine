@@ -176,7 +176,7 @@ export default function LoginPage() {
         }}
       >
         {/* Logo Background with 50% opacity and slight blur */}
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundImage: 'url(/assets/RaShoyi_logo_circle.png)', backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.5, filter: 'blur(6px)', zIndex: 0 }} />
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundImage: `url(${import.meta.env.BASE_URL}assets/RaShoyi_logo_circle.png)`, backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.5, filter: 'blur(6px)', zIndex: 0 }} />
         <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(15, 23, 42, 0.8)', zIndex: 1 }} />
         
         {/* Background decorations */}
@@ -186,7 +186,7 @@ export default function LoginPage() {
         <div className="login-hero-content" style={{ maxWidth: '480px', position: 'relative', zIndex: 10, color: '#fff' }}>
           {/* Logo */}
           <div style={{ marginBottom: '40px' }}>
-            <img src="/assets/RaShoyi_logo_circle.png" alt="RaShoyi Logo" style={{ height: '48px', width: 'auto', objectFit: 'contain' }} />
+            <img src={`${import.meta.env.BASE_URL}assets/RaShoyi_logo_circle.png`} alt="RaShoyi Logo" style={{ height: '48px', width: 'auto', objectFit: 'contain' }} />
           </div>
 
           {/* Tagline Badge */}
@@ -244,7 +244,7 @@ export default function LoginPage() {
         <div className="login-card" style={{ opacity: 0 }}>
           {/* Mobile Logo (shown only < 768px via CSS) */}
           <div className="login-mobile-logo" style={{ display: 'none', justifyContent: 'center', marginBottom: '32px' }}>
-            <img src="/assets/RaShoyi_logo_circle.png" alt="RaShoyi Logo" style={{ height: '40px', width: 'auto', objectFit: 'contain' }} />
+            <img src={`${import.meta.env.BASE_URL}assets/RaShoyi_logo_circle.png`} alt="RaShoyi Logo" style={{ height: '40px', width: 'auto', objectFit: 'contain' }} />
           </div>
 
           {/* Form Card */}

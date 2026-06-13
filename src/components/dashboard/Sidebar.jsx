@@ -49,7 +49,7 @@ export default function Sidebar() {
       <aside className="hidden md:flex flex-col w-16 lg:w-[220px] bg-[var(--color-sidebar-bg)] text-[var(--color-sidebar-text)] transition-all duration-300 shrink-0 border-r border-[var(--color-border)]">
         {/* Logo area */}
         <div className="flex items-center gap-2.5 p-[20px_16px] border-b border-[var(--color-border)] justify-center lg:justify-start">
-          <img src="/assets/RaShoyi_logo_circle.png" alt="RaShoyi Logo" className="h-7 w-auto object-contain" />
+          <img src={`${import.meta.env.BASE_URL}assets/RaShoyi_logo_circle.png`} alt="RaShoyi Logo" className="h-7 w-auto object-contain" />
         </div>
 
         {/* Navigation items */}

@@ -441,7 +441,7 @@ export default function SignupPage() {
         }}
       >
         {/* Logo Background with 50% opacity and slight blur */}
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundImage: 'url(/assets/RaShoyi_logo_circle.png)', backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.5, filter: 'blur(6px)', zIndex: 0 }} />
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundImage: `url(${import.meta.env.BASE_URL}assets/RaShoyi_logo_circle.png)`, backgroundSize: 'cover', backgroundPosition: 'center', opacity: 0.5, filter: 'blur(6px)', zIndex: 0 }} />
         <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(15, 23, 42, 0.8)', zIndex: 1 }} />
         
         {/* Background decorations */}
@@ -451,7 +451,7 @@ export default function SignupPage() {
         <div style={{ maxWidth: '480px', position: 'relative', zIndex: 10, color: '#fff' }}>
           {/* Logo */}
           <div style={{ marginBottom: '40px' }}>
-            <img src="/assets/RaShoyi_logo_circle.png" alt="RaShoyi Logo" style={{ height: '48px', width: 'auto', objectFit: 'contain' }} />
+            <img src={`${import.meta.env.BASE_URL}assets/RaShoyi_logo_circle.png`} alt="RaShoyi Logo" style={{ height: '48px', width: 'auto', objectFit: 'contain' }} />
           </div>
 
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 12px', borderRadius: '999px', fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.08em', background: 'rgba(249,115,22,0.2)', color: '#F97316', marginBottom: '16px', border: '1px solid rgba(249,115,22,0.3)' }}>
@@ -483,7 +483,7 @@ export default function SignupPage() {
         <div className="signup-card" style={{ opacity: 0 }}>
           {/* Mobile Logo */}
           <div className="signup-mobile-logo" style={{ display: 'none', justifyContent: 'center', marginBottom: '32px' }}>
-            <img src="/assets/RaShoyi_logo_circle.png" alt="RaShoyi Logo" style={{ height: '40px', width: 'auto', objectFit: 'contain' }} />
+            <img src={`${import.meta.env.BASE_URL}assets/RaShoyi_logo_circle.png`} alt="RaShoyi Logo" style={{ height: '40px', width: 'auto', objectFit: 'contain' }} />
           </div>
 
           {/* Form Card */}

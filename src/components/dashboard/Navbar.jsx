@@ -21,7 +21,7 @@ export default function Navbar() {
         <button className="md:hidden p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors" aria-label="Menu">
           <Menu size={20} className="text-[var(--color-text-secondary)]" />
         </button>
-        <img src="/assets/RaShoyi_logo_circle.png" alt="RaShoyi Logo" className="h-6 w-auto object-contain md:hidden" />
+        <img src={`${import.meta.env.BASE_URL}assets/RaShoyi_logo_circle.png`} alt="RaShoyi Logo" className="h-6 w-auto object-contain md:hidden" />
       </div>
 
       {/* Center: Restaurant name */}
