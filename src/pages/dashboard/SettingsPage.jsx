@@ -447,7 +447,7 @@ export default function SettingsPage() {
                 <div>
                   <h4 className="text-[13px] font-[600] text-[#1C1C1C]">Auto Update App</h4>
                   <p className="text-[12px] text-[#696969] mt-0.5 max-w-[200px]">
-                    Automatically install new versions of QRDine in the background.
+                    Automatically install new versions of RaShoyi in the background.
                   </p>
                 </div>
                 

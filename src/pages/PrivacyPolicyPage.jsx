@@ -42,7 +42,7 @@ export default function PrivacyPolicyPage() {
                 Privacy Policy &amp; Notice
               </h1>
               <p className="text-[var(--color-text-muted)] text-sm md:text-base mt-2 max-w-xl">
-                Learn how QRDine protects your personal data under the India Digital Personal Data Protection Act (DPDPA), 2023.
+                Learn how RaShoyi protects your personal data under the India Digital Personal Data Protection Act (DPDPA), 2023.
               </p>
             </div>
             <div className="bg-[var(--color-base-bg)]/80 border border-[var(--color-border)] rounded-2xl p-4 text-center md:text-right backdrop-blur-sm self-stretch md:self-auto flex flex-col justify-center">
@@ -87,14 +87,14 @@ export default function PrivacyPolicyPage() {
               <span className="text-orange-500">1.</span> Context &amp; Scope
             </h2>
             <p>
-              This Privacy Notice is issued by <strong>QRDine</strong> in compliance with the **Digital Personal Data Protection Act (DPDPA), 2023** of India. 
-              QRDine operates as a digital ordering solution connecting customers (<strong>Data Principals</strong>) with partner restaurants (<strong>Data Fiduciaries</strong>).
+              This Privacy Notice is issued by <strong>RaShoyi</strong> in compliance with the **Digital Personal Data Protection Act (DPDPA), 2023** of India. 
+              RaShoyi operates as a digital ordering solution connecting customers (<strong>Data Principals</strong>) with partner restaurants (<strong>Data Fiduciaries</strong>).
             </p>
             <p>
               This policy explains the processing of personal data for two distinct groups:
             </p>
             <ul className="list-disc list-inside space-y-1.5 pl-2 text-slate-600">
-              <li><strong className="text-slate-800">Restaurant Owners:</strong> Individuals who register and configure business details on the QRDine merchant dashboard.</li>
+              <li><strong className="text-slate-800">Restaurant Owners:</strong> Individuals who register and configure business details on the RaShoyi merchant dashboard.</li>
               <li><strong className="text-slate-800">Restaurant Customers:</strong> Dining guests who access the digital menu, customize items, and place tableside orders via the QR PWA screen.</li>
             </ul>
           </section>
@@ -229,7 +229,7 @@ export default function PrivacyPolicyPage() {
               <span className="text-orange-500">6.</span> Third-Party Data Processors
             </h2>
             <p>
-              QRDine shares data only with the following sub-processors to provide essential SaaS hosting and delivery:
+              RaShoyi shares data only with the following sub-processors to provide essential SaaS hosting and delivery:
             </p>
             <ul className="list-disc list-inside space-y-1.5 pl-2 text-slate-600">
               <li><strong>Google Firebase:</strong> Database hosting, user account authentication, and application servers.</li>
@@ -253,7 +253,7 @@ export default function PrivacyPolicyPage() {
               <div className="space-y-1">
                 <span className="text-xs font-bold text-slate-400 block uppercase tracking-wider">Grievance Redressal Officer</span>
                 <span className="text-base font-extrabold text-slate-800 block">Taha Jaffri</span>
-                <span className="text-xs text-slate-500 block">QRDine Security &amp; Compliance Team</span>
+                <span className="text-xs text-slate-500 block">RaShoyi Security &amp; Compliance Team</span>
               </div>
               <div className="flex items-center gap-2 bg-white px-4 py-3 rounded-lg border border-slate-200 shadow-sm hover:shadow transition-shadow self-start md:self-center">
                 <Mail className="w-4 h-4 text-orange-500" />

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Plus, Minus, AlertCircle } from 'lucide-react';
+import { Plus, Minus, AlertCircle, Utensils } from 'lucide-react';
 import { formatCurrency } from '../../utils/formatCurrency';
 
 /**

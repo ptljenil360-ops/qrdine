@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import { useTables } from '../../hooks/useTables';
 import { useOrders } from '../../hooks/useOrders';
-import { addTable, updateTableStatus, updateOrderStatus, deleteTable } from '../../firebase/firestore';
+import { addTable, updateTableStatus, updateOrderStatus, deleteTable, resetTableSession } from '../../firebase/firestore';
 import { generateQRDataUrl, generateQRBlob } from '../../utils/qrGenerator';
 import { useToast } from '../../context/ToastContext';
 import TableCard from '../../components/dashboard/TableCard';
@@ -44,7 +44,7 @@ export default function TablesPage() {
         const urls = {};
         for (const t of tables) {
           try {
-            const url = await generateQRDataUrl(restaurantId, t.id);
+            const url = await generateQRDataUrl(restaurantId, t.id, t.sessionId);
             urls[t.id] = url;
           } catch (err) {
             console.error('QR code URL generation error:', err);
@@ -76,7 +76,7 @@ export default function TablesPage() {
 
   const handleDownloadSingleQR = async (table) => {
     try {
-      const blob = await generateQRBlob(restaurantId, table.id, table.tableNumber);
+      const blob = await generateQRBlob(restaurantId, table.id, table.tableNumber, table.sessionId);
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
@@ -95,7 +95,7 @@ export default function TablesPage() {
     try {
       const zip = new JSZip();
       for (const t of tables) {
-        const blob = await generateQRBlob(restaurantId, t.id, t.tableNumber);
+        const blob = await generateQRBlob(restaurantId, t.id, t.tableNumber, t.sessionId);
         zip.file(`Table_${t.tableNumber}_QR.png`, blob);
       }
       const content = await zip.generateAsync({ type: 'blob' });
@@ -132,7 +132,7 @@ export default function TablesPage() {
       for (const order of tableOrders) {
         await updateOrderStatus(restaurantId, order.id, 'billed');
       }
-      await updateTableStatus(restaurantId, selectedTable.id, 'free');
+      await resetTableSession(restaurantId, selectedTable.id);
       showToast(`Table ${selectedTable.tableNumber} is now free. Orders finalized.`, 'success');
       setResetModalOpen(false);
       setSelectedTable(null);

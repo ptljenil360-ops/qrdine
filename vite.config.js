@@ -9,10 +9,13 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: 'prompt', // We use prompt so we can handle auto-update manually in the UI
-      includeAssets: ['favicon.svg', 'apple-touch-icon.png', 'masked-icon.svg'],
+      devOptions: {
+        enabled: true
+      },
+      includeAssets: ['favicon.png', 'apple-touch-icon.png', 'masked-icon.svg'],
       manifest: {
-        name: 'QRDine',
-        short_name: 'QRDine',
+        name: 'RaShoyi',
+        short_name: 'RaShoyi',
         description: 'Smart QR-based ordering for Indian restaurants',
         theme_color: '#F97316',
         background_color: '#0F172A',
@@ -20,9 +23,9 @@ export default defineConfig({
         orientation: 'portrait',
         icons: [
           {
-            src: '/favicon.svg',
+            src: '/favicon.png',
             sizes: '192x192 512x512',
-            type: 'image/svg+xml',
+            type: 'image/png',
             purpose: 'any maskable'
           },
           {

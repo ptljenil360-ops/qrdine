@@ -11,6 +11,8 @@ import { Clock, Check, CookingPot, FileText } from "lucide-react";
 export default function OrderCard({
   order,
   onUpdateStatus,
+  onPrintBill,
+  onPrintKOT,
   className = "",
   variant = "default",
 }) {
@@ -146,6 +148,30 @@ export default function OrderCard({
               onClick={() => onUpdateStatus(id, config.actionStatus)}
             >
               {config.actionLabel}
+            </Button>
+          )}
+
+          {typeof onPrintKOT === "function" && (status === "pending" || status === "preparing") && (
+            <Button
+              variant="outline"
+              className="w-full font-semibold border-blue-200 text-blue-700 hover:bg-blue-50 hover:text-blue-800 dark:border-blue-800/50 dark:text-blue-400 dark:hover:bg-blue-900/20 dark:hover:text-blue-300"
+              size="md"
+              icon={FileText}
+              onClick={() => onPrintKOT(order)}
+            >
+              Print KOT
+            </Button>
+          )}
+
+          {typeof onPrintBill === "function" && (status === "done" || status === "billed") && (
+            <Button
+              variant="outline"
+              className="w-full font-semibold border-orange-200 text-orange-700 hover:bg-orange-50 hover:text-orange-800 dark:border-orange-800/50 dark:text-orange-400 dark:hover:bg-orange-900/20 dark:hover:text-orange-300"
+              size="md"
+              icon={FileText}
+              onClick={() => onPrintBill(order)}
+            >
+              Print Bill
             </Button>
           )}
         </div>

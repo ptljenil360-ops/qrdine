@@ -28,8 +28,17 @@ export function AuthProvider({ children }) {
       if (firebaseUser) {
         setUser(firebaseUser)
         unsubscribeRestaurant = subscribeToRestaurant(firebaseUser.uid, (profile) => {
-          setRestaurant(profile)
+          if (profile === null) {
+            auth.signOut();
+            setUser(null);
+            setRestaurant(null);
+          } else {
+            setRestaurant(profile)
+          }
           setLoading(false)
+        }, (error) => {
+          console.error('Error subscribing to restaurant:', error);
+          setLoading(false);
         })
       } else {
         setUser(null)

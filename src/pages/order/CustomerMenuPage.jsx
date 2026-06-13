@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { useMenu } from '../../hooks/useMenu';
 import { useRestaurant } from '../../hooks/useRestaurant';
 import { useTables } from '../../hooks/useTables';
 import { useToast } from '../../context/ToastContext';
+import { auth, db } from '../../firebase/config';
+import { signInAnonymously } from 'firebase/auth';
+import { doc, updateDoc } from 'firebase/firestore';
 import ItemCard from '../../components/order/ItemCard';
 import FloatingCartBar from '../../components/order/FloatingCartBar';
 import Spinner from '../../components/ui/Spinner';
@@ -25,8 +28,14 @@ export default function CustomerMenuPage() {
   const displayTableNumber = table ? table.tableNumber : '...';
 
   const [activeCategory, setActiveCategory] = useState(DEFAULT_CATEGORIES[0]);
-  const [cart, setCart] = useState([]);
   const [isScrolled, setIsScrolled] = useState(false);
+
+  const [searchParams] = useSearchParams();
+  const sessionToken = searchParams.get('session');
+  const [isSessionValid, setIsSessionValid] = useState(true);
+  const [customerRole, setCustomerRole] = useState(null); // 'host' | 'guest'
+  const [claimPinInput, setClaimPinInput] = useState('');
+  const [showClaimInput, setShowClaimInput] = useState(false);
 
   // localStorage key: qrdine_cart_{restaurantId}_{tableId}
   const cartKey = `qrdine_cart_${restaurantId}_${tableId}`;
@@ -40,28 +49,77 @@ export default function CustomerMenuPage() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Load cart from localStorage on component mount
+  // Validate session & assign roles
   useEffect(() => {
-    try {
-      const savedCart = localStorage.getItem(cartKey);
-      if (savedCart) {
-        const parsed = JSON.parse(savedCart);
-        if (Array.isArray(parsed)) {
-          setCart(parsed);
-        }
-      }
-    } catch (err) {
-      console.warn('Failed to load cart from localStorage:', err);
+    if (!table && !tablesLoading) {
+      setIsSessionValid(false);
+      return;
     }
-  }, [cartKey]);
+    if (!table || !sessionToken) return;
 
-  // Persist cart changes
-  const saveCart = (newCart) => {
-    setCart(newCart);
+    if (table.sessionId !== sessionToken) {
+      setIsSessionValid(false);
+      return;
+    }
+
+    const initRole = async () => {
+      try {
+        const userCred = await signInAnonymously(auth);
+        const uid = userCred.user.uid;
+
+        if (!table.hostUid) {
+          // Race-lock attempt
+          const pin = Math.floor(1000 + Math.random() * 9000).toString();
+          try {
+            await updateDoc(doc(db, 'restaurants', restaurantId, 'tables', tableId), {
+              hostUid: uid,
+              hostPin: pin
+            });
+            setCustomerRole('host');
+          } catch (err) {
+            setCustomerRole('guest');
+          }
+        } else if (table.hostUid === uid) {
+          setCustomerRole('host');
+        } else {
+          setCustomerRole('guest');
+        }
+      } catch (err) {
+        console.error("Auth error:", err);
+      }
+    };
+    initRole();
+  }, [table, sessionToken, restaurantId, tableId, tablesLoading]);
+
+  const handleClaimHost = async () => {
+    if (claimPinInput === table?.hostPin) {
+      try {
+        const uid = auth.currentUser.uid;
+        await updateDoc(doc(db, 'restaurants', restaurantId, 'tables', tableId), {
+          hostUid: uid
+        });
+        setCustomerRole('host');
+        setShowClaimInput(false);
+        showToast('You are now the Host', 'success');
+      } catch (err) {
+        showToast('Failed to claim host', 'error');
+      }
+    } else {
+      showToast('Incorrect PIN', 'error');
+    }
+  };
+
+  const cart = table?.cart || [];
+
+  // Persist cart changes to Firestore
+  const saveCart = async (newCart) => {
     try {
-      localStorage.setItem(cartKey, JSON.stringify(newCart));
+      await updateDoc(doc(db, 'restaurants', restaurantId, 'tables', tableId), {
+        cart: newCart
+      });
     } catch (err) {
-      console.warn('Failed to save cart to localStorage:', err);
+      console.warn('Failed to save cart to Firestore:', err);
+      showToast('Failed to sync cart', 'error');
     }
   };
 
@@ -137,12 +195,23 @@ export default function CustomerMenuPage() {
     }
   };
 
-  const isPageLoading = menuLoading || restaurantLoading;
+  const isPageLoading = menuLoading || restaurantLoading || tablesLoading || !customerRole;
 
-  // Filter items that are available or defined categories
   const categoriesInMenu = DEFAULT_CATEGORIES.filter((cat) =>
     menu.some((item) => item.category === cat)
   );
+
+  if (!isSessionValid) {
+    return (
+      <div className="min-h-screen bg-[var(--color-customer-bg)] flex flex-col items-center justify-center p-6 text-center">
+        <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center text-red-500 mb-4">
+          <Utensils className="w-8 h-8" />
+        </div>
+        <h2 className="text-2xl font-black text-[var(--color-customer-text)] mb-2">Session Expired</h2>
+        <p className="text-[var(--color-customer-muted)]">This QR code is no longer active. Please ask the staff for a new QR code if you are still seated at this table.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[var(--color-customer-bg)] font-sans pb-[100px] text-[var(--color-customer-text)]">
@@ -172,6 +241,35 @@ export default function CustomerMenuPage() {
                     Table {displayTableNumber}
                   </p>
                 </div>
+              </div>
+              
+              {/* Host / Guest Status */}
+              <div className="text-right">
+                {customerRole === 'host' ? (
+                  <div className="bg-accent/10 border border-accent/20 rounded-md px-2 py-1 text-center">
+                    <p className="text-[10px] font-bold text-accent uppercase tracking-wider">Table Host</p>
+                    <p className="text-[12px] font-bold text-[var(--color-customer-text)] tracking-widest">PIN: {table?.hostPin}</p>
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-end gap-1">
+                    <span className="text-[10px] font-bold text-[var(--color-customer-muted)] uppercase tracking-wider px-2 py-1 bg-[var(--color-base-card)] rounded-md border border-[var(--color-customer-border)]">Guest</span>
+                    {showClaimInput ? (
+                      <div className="flex items-center gap-1">
+                        <input
+                          type="text"
+                          maxLength={4}
+                          value={claimPinInput}
+                          onChange={(e) => setClaimPinInput(e.target.value)}
+                          placeholder="PIN"
+                          className="w-16 h-6 text-xs text-center border border-accent/30 bg-[var(--color-base-bg)] text-[var(--color-customer-text)] rounded outline-none"
+                        />
+                        <button onClick={handleClaimHost} className="bg-accent text-white h-6 px-2 text-[10px] font-bold rounded">Claim</button>
+                      </div>
+                    ) : (
+                      <button onClick={() => setShowClaimInput(true)} className="text-[10px] text-accent font-bold hover:underline">Claim Host</button>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           </header>
@@ -270,7 +368,7 @@ export default function CustomerMenuPage() {
           <FloatingCartBar
             itemCount={totalItemCount}
             totalAmount={totalAmount}
-            onClick={() => navigate(`/order/${restaurantId}/${tableId}/cart`)}
+            onClick={() => navigate(`/order/${restaurantId}/${tableId}/cart?session=${sessionToken}`)}
           />
         </>
       )}

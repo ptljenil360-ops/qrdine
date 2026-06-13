@@ -304,7 +304,7 @@ export default function OnboardingPage() {
       await updateRestaurantProfile(restaurantId, {
         onboardingComplete: true,
       });
-      showToast('Onboarding complete! Welcome to RaShoyi.', 'success');
+      showToast('Onboarding complete! Welcome to QRDine.', 'success');
       navigate('/dashboard');
     } catch (err) {
       console.error('Onboarding update failed:', err);
@@ -326,7 +326,7 @@ export default function OnboardingPage() {
             </div>
             <div>
               <h1 className="text-[20px] font-extrabold text-slate-900 m-0">{restaurant?.name || 'Restaurant Setup'}</h1>
-              <p className="text-xs text-slate-500 m-0">Set up your RaShoyi digital system</p>
+              <p className="text-xs text-slate-500 m-0">Set up your QRDine digital system</p>
             </div>
           </div>
           

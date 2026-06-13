@@ -45,7 +45,10 @@
   --font-inter: 'Inter', sans-serif;
   --font-syne: 'Syne', sans-serif;
   --font-bricolage: 'Bricolage Grotesque', sans-serif;
-  --font-family-base: var(--font-inter);
+  --font-cormorant: 'Cormorant Garamond', serif;
+  --font-jost: 'Jost', sans-serif;
+  --font-family-base: var(--font-jost);
+  --font-family-heading: var(--font-cormorant);
 
   /* ── Border Radius ── */
   --radius-card: 16px; /* softer UI */
@@ -91,6 +94,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-family-heading);
+  font-weight: 400;
 }
 
 /* Dark Mode Overrides */
@@ -148,8 +156,29 @@ html.dark {
 }
 
 /* ═══════════════════════════════════════════════════════
-   Utility Classes (Glassmorphism, Neumorphism, Gradients)
+   Utility Classes (Typography, Glassmorphism, Neumorphism)
    ═══════════════════════════════════════════════════════ */
+
+.style-label {
+  font-family: var(--font-family-base);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.style-price {
+  font-family: var(--font-family-heading);
+  font-weight: 400;
+  color: #e8c48a;
+}
+
+.style-tagline {
+  font-family: var(--font-family-heading);
+  font-style: italic;
+  font-size: 0.875rem;
+  letter-spacing: 0.1em;
+  color: var(--color-accent);
+}
 
 .gradient-accent {
   background: linear-gradient(135deg, var(--color-accent), var(--color-accent-dark));
@@ -249,19 +278,60 @@ html.dark .neumorphic-card {
 }
 
 /* ═══════════════════════════════════════════════════════
-   Print Styles — Bill Only
+   Print Styles — Bill & KOT
    ═══════════════════════════════════════════════════════ */
 
 @media print {
-  body > *:not(.bill-print-area) { display: none !important; }
-  .bill-print-area {
-    display: block !important;
-    width: 80mm;
-    font-size: 12px;
-    font-family: monospace;
+  body {
+    background: white;
+    color: black;
     margin: 0;
     padding: 0;
   }
+  
+  /* Hide standard UI elements */
+  #root > *:not(.print-container) {
+    display: none !important;
+  }
+
+  .print-container {
+    display: block !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80mm;
+    margin: 0;
+    padding: 0;
+    background: white;
+  }
+
+  .print-area {
+    width: 80mm;
+    font-family: monospace;
+    font-size: 12px;
+    color: black;
+    margin: 0 auto;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .print-area h1, .print-area h2 {
+    font-family: monospace;
+    font-weight: bold;
+    text-align: center;
+    margin: 0 0 5px 0;
+  }
+
+  .print-area h1 { font-size: 18px; }
+  .print-area h2 { font-size: 14px; }
+  
+  .print-area p { margin: 2px 0; }
+  
+  .print-divider {
+    border-top: 1px dashed black;
+    margin: 5px 0;
+  }
+
   .no-print { display: none !important; }
 }
 

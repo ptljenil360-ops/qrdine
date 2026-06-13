@@ -7,7 +7,7 @@ import InstallPwaButton from '../ui/InstallPwaButton'
  * Navbar — top navigation bar for the owner dashboard.
  *
  * Layout from UI Brief:
- * [QRDine Logo]          [Restaurant Name]  [Theme Toggle] [Avatar]
+ * [RaShoyi Logo]          [Restaurant Name]  [Theme Toggle] [Avatar]
  * Height: 64px
  */
 export default function Navbar() {
@@ -21,7 +21,7 @@ export default function Navbar() {
         <button className="md:hidden p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors" aria-label="Menu">
           <Menu size={20} className="text-[var(--color-text-secondary)]" />
         </button>
-        <span className="text-accent font-bold text-lg md:hidden">QRDine</span>
+        <img src="/assets/RaShoyi_logo_circle.png" alt="RaShoyi Logo" className="h-6 w-auto object-contain md:hidden" />
       </div>
 
       {/* Center: Restaurant name */}

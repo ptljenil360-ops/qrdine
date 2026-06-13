@@ -43,7 +43,7 @@ export default function PwaUpdater() {
       </div>
       <div className="flex-1">
         <h4 className="text-[14px] font-[600] text-[#1C1C1C] mb-1">Update Available</h4>
-        <p className="text-[12px] text-[#696969] leading-tight">A new version of QRDine is available. Refresh to apply the update.</p>
+        <p className="text-[12px] text-[#696969] leading-tight">A new version of RaShoyi is available. Refresh to apply the update.</p>
       </div>
       <div className="flex flex-col gap-2">
         <button

@@ -17,7 +17,9 @@ export default function LandingPage() {
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="w-full p-6 flex justify-between items-center max-w-7xl mx-auto z-10"
       >
-        <div className="font-syne font-[800] text-[22px] tracking-[-0.02em] text-orange-500">QRDine</div>
+        <div className="flex items-center">
+          <img src="/assets/RaShoyi_logo_circle.png" alt="RaShoyi Logo" className="h-8 w-auto object-contain" />
+        </div>
         <div className="flex gap-4">
         </div>
       </motion.nav>
@@ -42,19 +44,21 @@ export default function LandingPage() {
                   hidden: { y: 50, opacity: 0 },
                   visible: { y: 0, opacity: 1, transition: { duration: 0.8, ease: "easeOut" } }
                 }}
-                className="font-bricolage font-[800] text-[clamp(48px,7vw,88px)] leading-[1.05] tracking-[-0.03em] text-white text-center"
+                className="font-heading font-[400] text-[clamp(48px,7vw,88px)] leading-[1.05] tracking-normal text-[#FDFCFB] text-center"
+                style={{ textShadow: '0 4px 32px rgba(0,0,0,0.8), 0 2px 10px rgba(0,0,0,0.5)' }}
               >
-                Modern Restaurant Ordering Made Simple
+                Modern Restaurant Ordering <span className="italic text-[#e8c48a]">Made Simple</span>
               </motion.h1>
               <motion.p 
                 variants={{
                   hidden: { y: 50, opacity: 0 },
                   visible: { y: 0, opacity: 1, transition: { duration: 0.8, ease: "easeOut" } }
                 }}
-                className="font-inter font-[300] text-[clamp(16px,2vw,20px)] leading-[1.7] tracking-[0.01em] text-white/75 text-center max-w-3xl mt-6"
+                className="font-body font-[400] text-[clamp(16px,2vw,20px)] leading-[1.7] tracking-[0.01em] text-[#F8F5F0] text-center max-w-3xl mt-6"
+                style={{ textShadow: '0 2px 16px rgba(0,0,0,0.9)' }}
               >
                 Empower customers to scan, browse menus, and place orders instantly <br className="hidden md:block" />
-                with QRDine's powerful web app.
+                with RaShoyi's powerful web app.
               </motion.p>
               <motion.div 
                 variants={{
@@ -111,7 +115,7 @@ export default function LandingPage() {
                 }}
                 className="font-inter font-[300] text-lg text-white/70 leading-relaxed max-w-xl"
               >
-                Say goodbye to waiting for menus and flagging down waiters. With QRDine, 
+                Say goodbye to waiting for menus and flagging down waiters. With RaShoyi, 
                 your smartphone becomes your personal ordering terminal. Instantly browse 
                 vibrant digital menus, customize your meals, and order directly to your table 
                 with a single scan.

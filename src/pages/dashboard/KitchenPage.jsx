@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import { useOrders } from '../../hooks/useOrders';
+import { useRestaurant } from '../../hooks/useRestaurant';
 import { updateOrderStatus } from '../../firebase/firestore';
 import { useToast } from '../../context/ToastContext';
 import OrderCard from '../../components/dashboard/OrderCard';
@@ -8,11 +9,15 @@ import Spinner from '../../components/ui/Spinner';
 import Card from '../../components/ui/Card';
 import { ChefHat, Volume2, VolumeX, CheckCircle2 } from 'lucide-react';
 import { gsap } from 'gsap';
+import PrintableKOT from '../../components/print/PrintableKOT';
 
 export default function KitchenPage() {
   const { restaurantId } = useAuth();
   const { showToast } = useToast();
   const [soundEnabled, setSoundEnabled] = useState(true);
+  const [printKOTOrder, setPrintKOTOrder] = useState(null);
+
+  const { restaurant } = useRestaurant(restaurantId);
 
   /** Real-time subscription to pending + preparing orders */
   const { orders, loading, error } = useOrders(restaurantId, ['pending', 'preparing']);
@@ -77,8 +82,16 @@ export default function KitchenPage() {
     }
   };
 
+  const handlePrintKOT = (order) => {
+    setPrintKOTOrder(order);
+    setTimeout(() => {
+      window.print();
+    }, 100);
+  };
+
   return (
     <div className="space-y-6 font-sans h-full flex flex-col pb-12">
+      <PrintableKOT restaurant={restaurant} order={printKOTOrder} tableNumber={printKOTOrder?.tableNumber} />
 
       {/* Top Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-5">
@@ -140,6 +153,7 @@ export default function KitchenPage() {
                 <OrderCard
                   order={order}
                   onUpdateStatus={handleUpdateStatus}
+                  onPrintKOT={handlePrintKOT}
                 />
               </div>
             ))}

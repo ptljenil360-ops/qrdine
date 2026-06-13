@@ -5,7 +5,7 @@ import Navbar from '../components/dashboard/Navbar'
 /**
  * DashboardLayout — the owner dashboard shell.
  *
- * Layout from QRDine_UI_Brief.md:
+ * Layout from RaShoyi_UI_Brief.md:
  * ┌─────────────────────────────────────────────┐
  * │              TOP NAV BAR (64px)              │
  * ├──────────┬──────────────────────────────────┤

@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { useOrders } from "../../hooks/useOrders";
+import { useRestaurant } from "../../hooks/useRestaurant";
 import { updateOrderStatus } from "../../firebase/firestore";
 import { useToast } from "../../context/ToastContext";
 import OrderCard from "../../components/dashboard/OrderCard";
 import Spinner from "../../components/ui/Spinner";
 import Card from "../../components/ui/Card";
 import { Receipt, Search, FileText } from "lucide-react";
+import PrintableBill from "../../components/print/PrintableBill";
 
 export default function BillsPage() {
   const { restaurantId } = useAuth();
@@ -14,6 +16,9 @@ export default function BillsPage() {
   
   const [searchTerm, setSearchTerm] = useState("");
   const [activeTab, setActiveTab] = useState("done");
+  const [printOrder, setPrintOrder] = useState(null);
+
+  const { restaurant } = useRestaurant(restaurantId);
 
   const getStatuses = () => {
     return activeTab === "done" ? ["done"] : ["billed"];
@@ -38,8 +43,17 @@ export default function BillsPage() {
     return tableMatch;
   });
 
+  const handlePrintBill = (order) => {
+    setPrintOrder(order);
+    setTimeout(() => {
+      window.print();
+    }, 100);
+  };
+
   return (
     <div className="space-y-6 font-sans pb-12">
+      <PrintableBill restaurant={restaurant} order={printOrder} tableNumber={printOrder?.tableNumber} />
+      
       {/* Top Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-5">
         <div>
@@ -128,6 +142,7 @@ export default function BillsPage() {
               key={order.id}
               order={order}
               onUpdateStatus={handleUpdateStatus}
+              onPrintBill={handlePrintBill}
             />
           ))}
         </div>

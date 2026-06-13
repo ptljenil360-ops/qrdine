@@ -19,8 +19,8 @@ const getBaseUrl = () => window.location.origin;
  * @param {string} tableId
  * @returns {Promise<string>} QR code as data URL (for display in <img>)
  */
-export async function generateQRDataUrl(restaurantId, tableId) {
-  const url = `${getBaseUrl()}/order/${restaurantId}/${tableId}`
+export async function generateQRDataUrl(restaurantId, tableId, sessionId) {
+  const url = `${getBaseUrl()}/order/${restaurantId}/${tableId}${sessionId ? `?session=${sessionId}` : ''}`
   const dataUrl = await QRCode.toDataURL(url, {
     width: 500,
     margin: 2,
@@ -41,8 +41,8 @@ export async function generateQRDataUrl(restaurantId, tableId) {
  * @param {string|number} tableNumber
  * @returns {Promise<Blob>} QR code PNG blob
  */
-export async function generateQRBlob(restaurantId, tableId, tableNumber) {
-  const url = `${getBaseUrl()}/order/${restaurantId}/${tableId}`
+export async function generateQRBlob(restaurantId, tableId, tableNumber, sessionId) {
+  const url = `${getBaseUrl()}/order/${restaurantId}/${tableId}${sessionId ? `?session=${sessionId}` : ''}`
   const canvas = document.createElement('canvas')
   const tempCanvas = document.createElement('canvas')
 
@@ -87,6 +87,6 @@ export async function generateQRBlob(restaurantId, tableId, tableNumber) {
  * @param {string} tableId
  * @returns {string} Full URL
  */
-export function getTableUrl(restaurantId, tableId) {
-  return `${getBaseUrl()}/order/${restaurantId}/${tableId}`
+export function getTableUrl(restaurantId, tableId, sessionId) {
+  return `${getBaseUrl()}/order/${restaurantId}/${tableId}${sessionId ? `?session=${sessionId}` : ''}`
 }

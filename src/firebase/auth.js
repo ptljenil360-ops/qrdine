@@ -9,7 +9,8 @@ import {
   deleteUser,
 } from 'firebase/auth'
 import { doc, setDoc, getDoc } from 'firebase/firestore'
-import { auth, db } from './config'
+import { httpsCallable } from 'firebase/functions'
+import { auth, db, functions } from './config'
 
 const LOGIN_REGISTRY_COLLECTION = 'loginRegistry'
 const LEGACY_LOGIN_REGISTRY_COLLECTION = 'licenseRegistry'
@@ -219,7 +220,8 @@ export async function sendVerification() {
 export async function deleteUserAccount(user) {
   if (!user) throw new Error('No user is currently signed in.')
   try {
-    await deleteUser(user)
+    const deleteAccountFn = httpsCallable(functions, 'deleteRestaurantAccount')
+    await deleteAccountFn()
     return true
   } catch (error) {
     console.error('Error deleting account:', error)

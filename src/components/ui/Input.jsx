@@ -3,7 +3,7 @@ import { HelpCircle, Eye, EyeOff } from 'lucide-react';
 
 /**
  * Premium Input field conforming to accessibility, SEO unique ID,
- * and visual standards from the QRDine UI Brief.
+ * and visual standards from the RaShoyi UI Brief.
  */
 const Input = React.forwardRef(({
   label,

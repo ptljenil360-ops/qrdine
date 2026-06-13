@@ -96,6 +96,7 @@ export async function addTable(restaurantId, data) {
   const docRef = await addDoc(colRef, {
     ...data,
     status: 'free',
+    sessionId: crypto.randomUUID(),
     lastUpdated: serverTimestamp(),
   })
   return docRef.id
@@ -110,6 +111,21 @@ export async function addTable(restaurantId, data) {
 export async function updateTableStatus(restaurantId, tableId, status) {
   await updateDoc(doc(db, `restaurants/${restaurantId}/tables`, tableId), {
     status,
+    lastUpdated: serverTimestamp(),
+  })
+}
+
+/**
+ * Reset a table's session (clears host and creates new session URL).
+ * @param {string} restaurantId
+ * @param {string} tableId
+ */
+export async function resetTableSession(restaurantId, tableId) {
+  await updateDoc(doc(db, `restaurants/${restaurantId}/tables`, tableId), {
+    status: 'free',
+    sessionId: crypto.randomUUID(),
+    hostUid: null,
+    hostPin: null,
     lastUpdated: serverTimestamp(),
   })
 }
@@ -233,12 +249,14 @@ export function subscribeToOrders(restaurantId, statusFilter, callback) {
  * @param {function} callback - Receives Restaurant object
  * @returns {function} Unsubscribe function
  */
-export function subscribeToRestaurant(restaurantId, callback) {
+export function subscribeToRestaurant(restaurantId, callback, onError) {
   return onSnapshot(doc(db, 'restaurants', restaurantId), (snap) => {
     if (snap.exists()) {
       callback({ id: snap.id, ...snap.data() })
+    } else {
+      callback(null)
     }
-  })
+  }, onError)
 }
 
 

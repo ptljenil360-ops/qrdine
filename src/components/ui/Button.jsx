@@ -2,7 +2,7 @@ import React from 'react';
 import Spinner from './Spinner';
 
 /**
- * Premium Button component built using the QRDine design system tokens.
+ * Premium Button component built using the RaShoyi design system tokens.
  * Features variants, loading state with a spinner, and flexible sizing.
  */
 export default function Button({
