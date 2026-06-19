@@ -18,7 +18,7 @@ export function formatCurrency(amount) {
 
 /**
  * Calculate bill totals with GST and discount.
- * From QRDine_Firebase_Setup.md Section 10.
+ * From RaShoyi_Firebase_Setup.md Section 10.
  *
  * @param {Array<{price: number, quantity: number}>} items
  * @param {number} gstRate - 5 or 18

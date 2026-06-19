@@ -1,5 +1,5 @@
 /**
- * QRDine — Application Constants
+ * RaShoyi — Application Constants
  * All enums, error codes, and default values used across the app.
  */
 
@@ -76,3 +76,17 @@ export const MOBILE_TAB_ITEMS = [
   { label: 'Tables', path: '/dashboard/tables', icon: 'LayoutGrid' },
   { label: 'Settings', path: '/dashboard/settings', icon: 'Settings' },
 ]
+
+/* ── Order Types ── */
+export const ORDER_TYPE = {
+  DINE_IN: 'dine-in',
+  TAKEAWAY: 'takeaway',
+  DELIVERY: 'delivery',
+}
+
+
+/* ── Table Session Defaults ── */
+export const TABLE_SESSION_DEFAULTS = {
+  TIMEOUT_MINUTES: 120,    // Auto-release after 2 hours of inactivity
+  GRACE_PERIOD_MINS: 15,   // Grace period before marking as abandoned
+}

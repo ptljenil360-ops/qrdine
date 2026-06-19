@@ -9,7 +9,7 @@ const getBaseUrl = () => window.location.origin;
 /**
  * Generate a QR code data URL for a specific table.
  *
- * From QRDine_Backend_Architecture.md:
+ * From RaShoyi_Backend_Architecture.md:
  * - URL: {base}/order/{restaurantId}/{tableId}
  * - Size: 500x500px
  * - Error Correction: Level H (30% damage tolerance)
@@ -73,7 +73,7 @@ export async function generateQRBlob(restaurantId, tableId, tableNumber, session
   // Subtle brand text
   ctx.fillStyle = '#94A3B8' // Slate 400
   ctx.font = '16px Inter, system-ui, sans-serif'
-  ctx.fillText('Scan to Order | QRDine PWA', 250, 548)
+  ctx.fillText('Scan to Order | RaShoyi', 250, 548)
 
   return new Promise((resolve) => {
     canvas.toBlob((blob) => resolve(blob), 'image/png')

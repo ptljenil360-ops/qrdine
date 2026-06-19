@@ -4,9 +4,11 @@ import { useMenu } from '../../hooks/useMenu';
 import { useRestaurant } from '../../hooks/useRestaurant';
 import { useTables } from '../../hooks/useTables';
 import { useToast } from '../../context/ToastContext';
-import { auth, db } from '../../firebase/config';
+import { doc, updateDoc, writeBatch } from 'firebase/firestore';
 import { signInAnonymously } from 'firebase/auth';
-import { doc, updateDoc } from 'firebase/firestore';
+import { httpsCallable } from 'firebase/functions';
+import { auth, db, functions } from '../../firebase/config';
+
 import ItemCard from '../../components/order/ItemCard';
 import FloatingCartBar from '../../components/order/FloatingCartBar';
 import Spinner from '../../components/ui/Spinner';
@@ -15,6 +17,13 @@ import { DEFAULT_CATEGORIES } from '../../utils/constants';
 import { Utensils, Sparkles, MapPin } from 'lucide-react';
 import { gsap } from 'gsap';
 
+async function generatePinHash(pin) {
+  const msgBuffer = new TextEncoder().encode(pin);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
 export default function CustomerMenuPage() {
   const { restaurantId, tableId } = useParams();
   const navigate = useNavigate();
@@ -22,7 +31,7 @@ export default function CustomerMenuPage() {
 
   const { menu, loading: menuLoading } = useMenu(restaurantId);
   const { restaurant, loading: restaurantLoading } = useRestaurant(restaurantId);
-  const { tables } = useTables(restaurantId);
+  const { tables, loading: tablesLoading } = useTables(restaurantId);
 
   const table = tables.find(t => t.id === tableId);
   const displayTableNumber = table ? table.tableNumber : '...';
@@ -36,9 +45,6 @@ export default function CustomerMenuPage() {
   const [customerRole, setCustomerRole] = useState(null); // 'host' | 'guest'
   const [claimPinInput, setClaimPinInput] = useState('');
   const [showClaimInput, setShowClaimInput] = useState(false);
-
-  // localStorage key: qrdine_cart_{restaurantId}_{tableId}
-  const cartKey = `qrdine_cart_${restaurantId}_${tableId}`;
 
   // Handle scroll for sticky header styling
   useEffect(() => {
@@ -71,10 +77,20 @@ export default function CustomerMenuPage() {
           // Race-lock attempt
           const pin = Math.floor(1000 + Math.random() * 9000).toString();
           try {
-            await updateDoc(doc(db, 'restaurants', restaurantId, 'tables', tableId), {
-              hostUid: uid,
-              hostPin: pin
-            });
+            const batch = writeBatch(db);
+            const tableRef = doc(db, 'restaurants', restaurantId, 'tables', tableId);
+            const pinRef = doc(db, 'restaurants', restaurantId, 'tables', tableId, 'private', 'pin');
+            
+            batch.update(tableRef, { hostUid: uid });
+            
+            const hostPinHash = await generatePinHash(pin);
+            batch.set(pinRef, { hostPinHash });
+            
+            await batch.commit();
+            
+            // We store it in session storage so the user can see it during this session
+            sessionStorage.setItem(`rashoyi_host_pin_${tableId}`, pin);
+            
             setCustomerRole('host');
           } catch (err) {
             setCustomerRole('guest');
@@ -92,20 +108,15 @@ export default function CustomerMenuPage() {
   }, [table, sessionToken, restaurantId, tableId, tablesLoading]);
 
   const handleClaimHost = async () => {
-    if (claimPinInput === table?.hostPin) {
-      try {
-        const uid = auth.currentUser.uid;
-        await updateDoc(doc(db, 'restaurants', restaurantId, 'tables', tableId), {
-          hostUid: uid
-        });
-        setCustomerRole('host');
-        setShowClaimInput(false);
-        showToast('You are now the Host', 'success');
-      } catch (err) {
-        showToast('Failed to claim host', 'error');
-      }
-    } else {
-      showToast('Incorrect PIN', 'error');
+    try {
+      const claimFn = httpsCallable(functions, 'claimHost');
+      await claimFn({ restaurantId, tableId, pin: claimPinInput });
+      setCustomerRole('host');
+      setShowClaimInput(false);
+      showToast('You are now the Host', 'success');
+    } catch (err) {
+      const msg = err?.code === 'functions/permission-denied' ? 'Incorrect PIN' : 'Failed to claim host';
+      showToast(msg, 'error');
     }
   };
 
@@ -248,7 +259,11 @@ export default function CustomerMenuPage() {
                 {customerRole === 'host' ? (
                   <div className="bg-accent/10 border border-accent/20 rounded-md px-2 py-1 text-center">
                     <p className="text-[10px] font-bold text-accent uppercase tracking-wider">Table Host</p>
-                    <p className="text-[12px] font-bold text-[var(--color-customer-text)] tracking-widest">PIN: {table?.hostPin}</p>
+                    {sessionStorage.getItem(`rashoyi_host_pin_${tableId}`) && (
+                      <p className="text-[12px] font-bold text-[var(--color-customer-text)] tracking-widest">
+                        PIN: {sessionStorage.getItem(`rashoyi_host_pin_${tableId}`)}
+                      </p>
+                    )}
                   </div>
                 ) : (
                   <div className="flex flex-col items-end gap-1">

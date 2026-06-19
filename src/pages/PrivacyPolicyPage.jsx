@@ -128,7 +128,7 @@ export default function PrivacyPolicyPage() {
                   <tr>
                     <td className="p-3 font-semibold text-slate-800">Restaurant Menu</td>
                     <td className="p-3">Dish names, prices, description, category, and food item photographs</td>
-                    <td className="p-3">Cloud Firestore &amp; Cloudinary CDN (for optimized image delivery)</td>
+                    <td className="p-3">Cloud Firestore &amp; Firebase Storage (for optimized image delivery)</td>
                     <td className="p-3">Public menu display to customers scanning tableside QR codes</td>
                   </tr>
                   <tr>
@@ -219,7 +219,7 @@ export default function PrivacyPolicyPage() {
               <li>All databases are hosted on secure, regional Firebase Cloud environments (located in Mumbai/Asia region).</li>
               <li>Network traffic is encrypted in transit using Transport Layer Security (TLS 1.3).</li>
               <li>Security Rules strictly restrict read/write access to owners' settings and block third-party index enumeration.</li>
-              <li>Cloudinary images are uploaded securely over HTTPS using unsigned tokens optimized for size and delivered over static CDN endpoints with tight CSP parameters.</li>
+              <li>Firebase Storage images are uploaded securely over HTTPS.</li>
             </ul>
           </section>
 
@@ -233,7 +233,7 @@ export default function PrivacyPolicyPage() {
             </p>
             <ul className="list-disc list-inside space-y-1.5 pl-2 text-slate-600">
               <li><strong>Google Firebase:</strong> Database hosting, user account authentication, and application servers.</li>
-              <li><strong>Cloudinary:</strong> Menu dish photographs storage, compression, and delivery.</li>
+              <li><strong>Firebase Storage:</strong> Menu dish photographs storage, compression, and delivery.</li>
             </ul>
             <p className="text-xs text-slate-500 bg-amber-50 border border-amber-200 p-3 rounded-lg mt-2">
               Note: We do not sell, rent, or trade your dining behaviors or contact profiles with external advertising aggregators or data brokers.
@@ -257,8 +257,8 @@ export default function PrivacyPolicyPage() {
               </div>
               <div className="flex items-center gap-2 bg-white px-4 py-3 rounded-lg border border-slate-200 shadow-sm hover:shadow transition-shadow self-start md:self-center">
                 <Mail className="w-4 h-4 text-orange-500" />
-                <a href="mailto:grievance@qrdine.in" className="text-xs font-bold text-slate-700 hover:text-orange-600 transition-colors">
-                  grievance@qrdine.in
+                <a href="mailto:grievance@rashoyi.in" className="text-xs font-bold text-slate-700 hover:text-orange-600 transition-colors">
+                  grievance@rashoyi.in
                 </a>
               </div>
             </div>

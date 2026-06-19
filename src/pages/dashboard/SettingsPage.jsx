@@ -111,7 +111,7 @@ export default function SettingsPage() {
     try {
       let logoUrl = restaurant?.logo || '';
       if (logoFile) {
-        logoUrl = await uploadImage(`restaurants/${restaurantId}/logo_${Date.now()}.jpg`, logoFile);
+        logoUrl = await uploadImage(`logos/${restaurantId}/logo_${Date.now()}.jpg`, logoFile);
       }
       await updateRestaurantProfile(restaurantId, {
         name: restaurantName.trim(),

@@ -4,7 +4,7 @@ import { subscribeToRestaurant } from '../firebase/firestore'
 /**
  * useRestaurant — real-time restaurant profile listener.
  *
- * Contract from QRDine_Firebase_Setup.md:
+ * Contract from RaShoyi_Firebase_Setup.md:
  * useRestaurant(restaurantId)
  * Returns: { restaurant, loading, error }
  *

@@ -63,7 +63,7 @@ const PrintableBill = forwardRef(({ restaurant, order, tableNumber }, ref) => {
         <div className="print-divider" />
         
         <p style={{ textAlign: 'center', marginTop: '10px' }}>Thank you for visiting!</p>
-        <p style={{ textAlign: 'center', fontSize: '10px' }}>Powered by QRDine</p>
+        <p style={{ textAlign: 'center', fontSize: '10px' }}>Powered by RaShoyi</p>
       </div>
     </div>
   );

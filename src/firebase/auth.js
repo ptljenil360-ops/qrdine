@@ -142,7 +142,7 @@ export async function completeSignup({
   if (!available) throw new Error('USERNAME_ALREADY_REGISTERED')
 
   const cleanEmail = email?.trim()
-  const registrationEmail = cleanEmail || `${normalizedUsername}@qrdine.internal`
+  const registrationEmail = cleanEmail || `${normalizedUsername}@rashoyi.internal`
 
   await updateEmail(user, registrationEmail)
   await updatePassword(user, password)
@@ -175,7 +175,6 @@ export async function completeSignup({
     uid,
     email: registrationEmail,
     username: normalizedUsername,
-    phone: phone.trim(),
   })
 
   return user
@@ -210,7 +209,7 @@ export async function loginWithLicense({ licenseNumber, password }) {
 
 export async function sendVerification() {
   const user = auth.currentUser
-  if (user && user.email && !user.email.endsWith('@qrdine.internal')) {
+  if (user && user.email && !user.email.endsWith('@rashoyi.internal')) {
     await sendEmailVerification(user)
     return true
   }

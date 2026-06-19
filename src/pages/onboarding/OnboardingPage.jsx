@@ -173,7 +173,7 @@ export default function OnboardingPage() {
       // Upload new photo if selected
       if (dishPhotoFile) {
         const fileName = `${Date.now()}_${dishName.trim().replace(/\s+/g, '_')}.jpg`;
-        photoUrl = await uploadImage(`menu/${restaurantId}/${fileName}`, dishPhotoFile);
+        photoUrl = await uploadImage(`dishes/${restaurantId}/${fileName}`, dishPhotoFile);
       }
 
       const dishData = {

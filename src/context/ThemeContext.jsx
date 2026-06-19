@@ -5,7 +5,7 @@ const ThemeContext = createContext();
 export function ThemeProvider({ children }) {
   // Check local storage or system preference
   const [isDarkMode, setIsDarkMode] = useState(() => {
-    const saved = localStorage.getItem('qrdine_theme');
+    const saved = localStorage.getItem('rashoyi_theme');
     if (saved) {
       return saved === 'dark';
     }
@@ -16,10 +16,10 @@ export function ThemeProvider({ children }) {
     const root = document.documentElement;
     if (isDarkMode) {
       root.classList.add('dark');
-      localStorage.setItem('qrdine_theme', 'dark');
+      localStorage.setItem('rashoyi_theme', 'dark');
     } else {
       root.classList.remove('dark');
-      localStorage.setItem('qrdine_theme', 'light');
+      localStorage.setItem('rashoyi_theme', 'light');
     }
   }, [isDarkMode]);
 

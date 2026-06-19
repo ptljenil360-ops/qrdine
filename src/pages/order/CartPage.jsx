@@ -3,7 +3,9 @@ import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { useRestaurant } from '../../hooks/useRestaurant';
 import { createOrder, updateTableStatus } from '../../firebase/firestore';
 import { auth, db } from '../../firebase/config';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc } from 'firebase/firestore';
+import { signInAnonymously, onAuthStateChanged } from 'firebase/auth';
+import { useTables } from '../../hooks/useTables';
 import { formatCurrency, calculateBill } from '../../utils/formatCurrency';
 import { useToast } from '../../context/ToastContext';
 import CartItem from '../../components/order/CartItem';
@@ -19,66 +21,39 @@ export default function CartPage() {
   const { showToast } = useToast();
 
   const { restaurant, loading: restaurantLoading } = useRestaurant(restaurantId);
+  const { tables, loading: tableLoading } = useTables(restaurantId);
+  const table = tables.find((t) => t.id === tableId);
+  const cart = table?.cart || [];
 
-  const [cart, setCart] = useState([]);
-  const [table, setTable] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [tableLoading, setTableLoading] = useState(true);
+  const [authReady, setAuthReady] = useState(!!auth.currentUser);
 
   const [searchParams] = useSearchParams();
   const sessionToken = searchParams.get('session');
-  const [isSessionValid, setIsSessionValid] = useState(true);
-  const [customerRole, setCustomerRole] = useState(null);
-
-  // Load cart on mount and subscribe to table updates... wait, we need real-time cart updates!
-  // To avoid rewriting to onSnapshot here, we can just use the table state if we use a real-time hook.
-  // We don't have a real-time hook for a single table yet, so let's import useTables.
-
-  // Load cart on mount
+  const isSessionValid = !tableLoading && table ? table.sessionId === sessionToken : true;
+  const currentUid = authReady ? auth.currentUser?.uid : undefined;
+  const customerRole = table?.hostUid && currentUid ? (table.hostUid === currentUid ? 'host' : 'guest') : null;
+  // Fallback for direct navigation
   useEffect(() => {
-    try {
-      const savedCart = localStorage.getItem(cartKey);
-      if (savedCart) {
-        const parsed = JSON.parse(savedCart);
-        if (Array.isArray(parsed)) {
-          setCart(parsed);
-        }
-      }
-    } catch (err) {
-      console.warn('Failed to load cart:', err);
+    if (!auth.currentUser) {
+      signInAnonymously(auth).catch(console.error);
     }
-  }, [cartKey]);
-
-  // Fetch Table details to resolve Table Number
-  useEffect(() => {
-    if (!restaurantId || !tableId) return;
-
-    const fetchTable = async () => {
-      try {
-        const snap = await getDoc(doc(db, 'restaurants', restaurantId, 'tables', tableId));
-        if (snap.exists()) {
-          setTable({ id: snap.id, ...snap.data() });
-        }
-      } catch (err) {
-        console.warn('Failed to fetch table:', err);
-      } finally {
-        setTableLoading(false);
-      }
-    };
-
-    fetchTable();
-  }, [restaurantId, tableId]);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) setAuthReady(true);
+    });
+    return () => unsubscribe();
+  }, []);
 
   // Entrance animations
   useEffect(() => {
-    if (!tablesLoading && !restaurantLoading) {
+    if (!tableLoading && !restaurantLoading) {
       gsap.fromTo(
         '.cart-fade-in',
         { y: 20, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.5, stagger: 0.1, ease: 'power2.out' }
       );
     }
-  }, [tablesLoading, restaurantLoading]);
+  }, [tableLoading, restaurantLoading]);
 
   // Persist cart helper
   const saveCart = async (newCart) => {
@@ -136,7 +111,7 @@ export default function CartPage() {
     }
 
     // Client-side rate limiting throttle: 10 second cooldown between orders
-    const lastOrderTime = localStorage.getItem('qrdine_last_order_time');
+    const lastOrderTime = localStorage.getItem('rashoyi_last_order_time');
     if (lastOrderTime && Date.now() - Number(lastOrderTime) < 10000) {
       showToast('Please wait a few seconds before placing another order.', 'warning');
       return;
@@ -174,7 +149,7 @@ export default function CartPage() {
       await updateTableStatus(restaurantId, tableId, 'occupied');
 
       // Set last order timestamp for throttling
-      localStorage.setItem('qrdine_last_order_time', Date.now().toString());
+      localStorage.setItem('rashoyi_last_order_time', Date.now().toString());
 
       // Clear local cart logic replaced by shared cart clearance
       saveCart([]);
@@ -191,7 +166,7 @@ export default function CartPage() {
     }
   };
 
-  const isPageLoading = restaurantLoading || tablesLoading;
+  const isPageLoading = restaurantLoading || tableLoading || !currentUid;
 
   if (!isSessionValid) {
     return (

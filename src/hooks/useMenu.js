@@ -4,7 +4,7 @@ import { subscribeToMenu } from '../firebase/firestore'
 /**
  * useMenu — real-time menu listener for a restaurant.
  *
- * Contract from QRDine_Firebase_Setup.md:
+ * Contract from RaShoyi_Firebase_Setup.md:
  * useMenu(restaurantId)
  * Returns: { menu, loading, error }
  *

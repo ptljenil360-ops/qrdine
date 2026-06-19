@@ -4,7 +4,7 @@ import { subscribeToTables } from '../firebase/firestore'
 /**
  * useTables — real-time table status listener.
  *
- * Contract from QRDine_Firebase_Setup.md:
+ * Contract from RaShoyi_Firebase_Setup.md:
  * useTables(restaurantId)
  * Returns: { tables, loading, error }
  *

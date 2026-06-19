@@ -4,7 +4,7 @@ import { subscribeToOrders } from '../firebase/firestore'
 /**
  * useOrders — real-time order listener with status filtering.
  *
- * Contract from QRDine_Firebase_Setup.md:
+ * Contract from RaShoyi_Firebase_Setup.md:
  * useOrders(restaurantId, statusFilter)
  * Returns: { orders, loading, error }
  *
